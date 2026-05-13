@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FP&A Ninjas — Sogelink</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --navy: #0A1628;
+  --navy-2: #142240;
+  --navy-3: #1E3358;
+  --blue: #1B5FA8;
+  --blue-2: #2472C8;
+  --blue-light: #E8F1FB;
+  --blue-mid: #B8D4F5;
+  --white: #FFFFFF;
+  --bg: #F4F7FC;
+  --surface: #FFFFFF;
+  --border: #DDE4EF;
+  --border-2: #C2CDE0;
+  --text: #0A1628;
+  --text-2: #4A5878;
+  --text-3: #8A96AA;
+  --accent: #1B5FA8;
+  --gold: #C8960A;
+  --gold-bg: #FDF6E0;
+  --green: #0E6B4A;
+  --green-bg: #E4F5EE;
+  --red: #A81B1B;
+  --red-bg: #FAEAEA;
+  --amber: #8A5200;
+  --amber-bg: #FDF2DC;
+  --purple: #4A2AB8;
+  --purple-bg: #EEEAF8;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --shadow: 0 1px 4px rgba(10,22,40,0.08);
+  --shadow-md: 0 4px 16px rgba(10,22,40,0.1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* Topbar */
+.topbar { background: var(--navy); border-bottom: 1px solid var(--navy-3); padding: 0 28px; display: flex; align-items: center; gap: 16px; height: 58px; position: sticky; top: 0; z-index: 100; }
+.topbar-brand { display: flex; align-items: center; gap: 12px; }
+.topbar-logo { width: 32px; height: 32px; background: var(--blue-2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; font-weight: 500; color: #fff; letter-spacing: -0.02em; }
+.topbar-names { display: flex; flex-direction: column; }
+.topbar-company { font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 400; line-height: 1; margin-bottom: 2px; }
+.topbar-team { font-size: 13px; color: #fff; font-weight: 500; line-height: 1; }
+.topbar-divider { width: 1px; height: 24px; background: var(--navy-3); }
+.topbar-spacer { flex: 1; }
+.topbar-actions { display: flex; align-items: center; gap: 8px; }
+.topbar-user { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.7); }
+.btn-topbar { padding: 6px 12px; border-radius: var(--radius-sm); font-family: var(--font); font-size: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: rgba(255,255,255,0.8); transition: all 0.12s; }
+.btn-topbar:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.btn-topbar-primary { background: var(--blue-2); border-color: var(--blue-2); color: #fff; }
+.btn-topbar-primary:hover { background: #1e84e0; }
+
+/* Main */
+.main { padding: 28px; max-width: 1200px; margin: 0 auto; width: 100%; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: var(--radius-sm); font-family: var(--font); font-size: 13px; font-weight: 400; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text); transition: all 0.12s; }
+.btn:hover { background: var(--bg); border-color: var(--border-2); }
+.btn-primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+.btn-primary:hover { background: var(--blue-2); border-color: var(--blue-2); }
+.btn-success { background: var(--green); color: #fff; border-color: var(--green); }
+.btn-success:hover { background: #0a5038; }
+.btn-danger { color: var(--red); border-color: transparent; background: transparent; padding: 3px 8px; font-size: 12px; }
+.btn-danger:hover { background: var(--red-bg); }
+.btn-sm { padding: 4px 10px; font-size: 12px; }
+.btn-export { background: var(--navy); color: #fff; border-color: var(--navy); font-size: 12px; padding: 6px 12px; }
+.btn-export:hover { background: var(--navy-2); }
+
+/* Avatar */
+.avatar { border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-family: var(--mono); flex-shrink: 0; }
+
+/* Tags */
+.tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 99px; white-space: nowrap; font-weight: 500; }
+.tag-process { background: var(--purple-bg); color: var(--purple); }
+.tag-reporting { background: var(--blue-light); color: var(--blue); }
+.badge { display: inline-flex; align-items: center; font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 500; white-space: nowrap; }
+.s-ns { background: #EEF0F4; color: #4A5878; }
+.s-ip { background: var(--blue-light); color: var(--blue); }
+.s-rv { background: var(--amber-bg); color: var(--amber); }
+.s-co { background: var(--green-bg); color: var(--green); }
+.s-bl { background: var(--red-bg); color: var(--red); }
+.prio-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+.p-h { background: #E24B4A; } .p-m { background: #EF9F27; } .p-l { background: var(--green); }
+.due-ok { color: var(--text-3); font-size: 12px; }
+.due-soon { color: var(--amber); font-weight: 500; font-size: 12px; }
+.due-over { color: var(--red); font-weight: 500; font-size: 12px; }
+.time-chip { font-family: var(--mono); font-size: 11px; padding: 2px 8px; background: var(--blue-light); color: var(--blue); border-radius: 99px; white-space: nowrap; }
+.time-chip-log { background: var(--green-bg); color: var(--green); }
+
+/* Summary bar */
+.summary-bar { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 28px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+.sc { display: flex; flex-direction: column; gap: 5px; padding: 0 28px 0 0; margin-right: 28px; border-right: 1px solid var(--border); }
+.sc:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+.sc-label { font-size: 12px; color: var(--text-3); font-weight: 400; letter-spacing: 0; text-transform: none; font-family: var(--font); }
+.sc-val { font-size: 32px; font-weight: 300; letter-spacing: -0.04em; color: var(--text); line-height: 1; }
+
+/* Toolbar */
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; }
+.toolbar input, .toolbar select { font-family: var(--font); font-size: 13px; padding: 7px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); transition: border-color 0.12s; }
+.toolbar input { flex: 1; min-width: 160px; }
+.toolbar input:focus, .toolbar select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(27,95,168,0.1); }
+
+/* Cards */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 10px; box-shadow: var(--shadow); transition: box-shadow 0.15s; }
+.card:hover { box-shadow: var(--shadow-md); }
+
+/* Project header */
+.proj-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; cursor: pointer; flex-wrap: wrap; transition: background 0.1s; border-left: 3px solid transparent; }
+.proj-header:hover { background: var(--bg); }
+.proj-header.process { border-left-color: var(--purple); }
+.proj-header.reporting { border-left-color: var(--blue-2); }
+.proj-name { font-size: 14px; font-weight: 500; flex: 1; min-width: 120px; }
+.chevron { font-size: 10px; color: var(--text-3); transition: transform 0.15s; display: inline-block; }
+.chevron.open { transform: rotate(90deg); }
+.prog-wrap { width: 64px; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.prog-bar { height: 100%; background: var(--blue-2); border-radius: 99px; transition: width 0.3s; }
+.prog-bar.done { background: var(--green); }
+
+/* Tabs */
+.tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 18px; background: var(--bg); }
+.tab { font-size: 12px; padding: 8px 14px; cursor: pointer; color: var(--text-2); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color 0.1s; }
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 500; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+th { text-align: left; padding: 7px 12px; font-size: 11px; font-weight: 500; color: var(--text-2); background: var(--bg); border-bottom: 1px solid var(--border); font-family: var(--mono); letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap; overflow: hidden; }
+td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #F8FAFD; }
+.add-row td { background: var(--bg); padding: 6px 10px; }
+.add-row input, .add-row select { width: 100%; font-size: 12px; padding: 5px 7px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); font-family: var(--font); }
+.add-row input:focus, .add-row select:focus { outline: none; border-color: var(--blue); }
+.mini-sel { font-size: 12px; padding: 3px 6px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: transparent; color: var(--text); font-family: var(--font); width: 100%; }
+.chip { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-2); }
+
+/* Comments */
+.comments-section { padding: 14px 18px; }
+.comment { display: flex; gap: 10px; margin-bottom: 12px; }
+.comment-body { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 9px 12px; }
+.comment-author { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.comment-time { font-size: 11px; color: var(--text-3); font-family: var(--mono); }
+.comment-text { font-size: 13px; color: var(--text); margin-top: 4px; line-height: 1.5; }
+.comment-input-row { display: flex; gap: 8px; align-items: flex-start; margin-top: 10px; }
+.comment-input-row textarea { flex: 1; font-family: var(--font); font-size: 13px; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); resize: none; min-height: 60px; }
+.comment-input-row textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(27,95,168,0.1); }
+
+/* Gantt */
+.gantt-wrap { overflow-x: auto; padding: 14px 18px; }
+.gantt-table { width: 100%; border-collapse: collapse; min-width: 700px; }
+.gantt-table th { background: var(--navy); color: rgba(255,255,255,0.7); font-size: 10px; font-family: var(--mono); letter-spacing: 0.04em; padding: 6px 8px; border: none; text-align: center; }
+.gantt-table th.name-col { text-align: left; min-width: 180px; background: var(--navy-2); }
+.gantt-table td { padding: 5px 8px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.gantt-table td.name-col { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; background: var(--bg); }
+.gantt-bar-cell { padding: 3px 4px; }
+.gantt-bar { height: 18px; border-radius: 3px; min-width: 4px; display: inline-block; }
+.gantt-bar-ns { background: #C2CDE0; }
+.gantt-bar-ip { background: var(--blue-2); }
+.gantt-bar-rv { background: #EF9F27; }
+.gantt-bar-co { background: var(--green); }
+.gantt-bar-bl { background: var(--red); opacity: 0.8; }
+.gantt-today { border-left: 2px dashed var(--red); position: relative; }
+.gantt-proj-row td { background: var(--navy); color: #fff; font-size: 11px; font-weight: 500; font-family: var(--mono); letter-spacing: 0.02em; }
+.gantt-proj-row td.name-col { background: var(--navy-2); }
+
+/* Stakeholders */
+.stk-grid { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 18px; }
+.stk-card { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 12px; }
+.stk-name { font-size: 13px; font-weight: 500; }
+.stk-role-badge { font-size: 10px; padding: 2px 7px; border-radius: 99px; font-family: var(--mono); }
+.stk-r { background: var(--blue-light); color: var(--blue); }
+.stk-a { background: var(--gold-bg); color: var(--gold); }
+.stk-c { background: var(--green-bg); color: var(--green); }
+.stk-i { background: #EEF0F4; color: var(--text-2); }
+.stk-add { display: flex; gap: 8px; padding: 0 18px 14px; flex-wrap: wrap; align-items: flex-end; }
+.stk-add input, .stk-add select { font-family: var(--font); font-size: 12px; padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); }
+
+/* Login */
+.login-wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--navy); padding: 20px; }
+.login-brand { text-align: center; margin-bottom: 32px; }
+.login-logo-mark { width: 52px; height: 52px; background: var(--blue-2); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 16px; font-weight: 500; color: #fff; margin: 0 auto 14px; }
+.login-company { font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+.login-team { font-size: 22px; color: #fff; font-weight: 300; letter-spacing: -0.02em; }
+.login-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 36px; width: 380px; max-width: 100%; box-shadow: var(--shadow-md); }
+.login-title { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+.login-sub { font-size: 13px; color: var(--text-2); margin-bottom: 24px; line-height: 1.5; }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 11px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2); margin-bottom: 6px; }
+.field input, .field select { width: 100%; font-family: var(--font); font-size: 13px; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); transition: border-color 0.12s; }
+.field input:focus, .field select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(27,95,168,0.1); background: #fff; }
+.login-actions { display: flex; gap: 8px; margin-top: 4px; }
+
+/* My tasks */
+.mt-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 8px; box-shadow: var(--shadow); transition: box-shadow 0.15s, border-color 0.15s; border-left: 3px solid var(--border); }
+.mt-card:hover { box-shadow: var(--shadow-md); border-left-color: var(--blue-2); }
+.mt-card.blocked { border-left-color: var(--red); }
+.mt-card.complete { border-left-color: var(--green); opacity: 0.7; }
+.mt-title { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+.mt-proj { font-size: 12px; color: var(--text-2); margin-bottom: 10px; }
+.mt-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.mt-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.mt-notes { font-size: 12px; color: var(--text-2); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); line-height: 1.5; }
+.section-head { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-3); margin-bottom: 10px; margin-top: 24px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.overdue-flag { background: var(--red-bg); color: var(--red); font-size: 10px; padding: 1px 7px; border-radius: 99px; margin-left: 6px; font-family: var(--mono); }
+
+/* Page header */
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.page-title { font-size: 20px; font-weight: 300; letter-spacing: -0.02em; color: var(--navy); }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(10,22,40,0.55); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; width: 520px; max-width: 100%; box-shadow: var(--shadow-md); }
+.modal-title { font-size: 16px; font-weight: 500; margin-bottom: 20px; color: var(--navy); }
+.form-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.fg { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 110px; }
+.fg label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-2); }
+.fg input, .fg select, .fg textarea { font-family: var(--font); font-size: 13px; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); transition: border-color 0.12s; }
+.fg input:focus, .fg select:focus, .fg textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(27,95,168,0.1); background: #fff; }
+.fg textarea { resize: vertical; min-height: 60px; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+.empty { text-align: center; padding: 32px; color: var(--text-3); font-size: 13px; }
+
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--navy); color: #fff; padding: 10px 18px; border-radius: var(--radius); font-size: 13px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-md); z-index: 999; animation: slideUp 0.2s ease; }
+.toast-undo { background: transparent; border: 1px solid rgba(255,255,255,0.35); color: #fff; border-radius: var(--radius-sm); padding: 4px 10px; font-size: 12px; cursor: pointer; font-family: var(--font); }
+.toast-undo:hover { background: rgba(255,255,255,0.15); }
+@keyframes slideUp { from { opacity:0; transform: translateX(-50%) translateY(10px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+
+.date-history { font-size:11px; color:var(--text-3); margin-top:2px; }
+.date-history-entry { display:flex; align-items:center; gap:4px; margin-bottom:1px; }
+.date-moved { color:var(--amber); }
+.date-original { color:var(--text-3); text-decoration:line-through; }
+.on-time-badge { font-size:10px; padding:2px 7px; border-radius:99px; font-family:var(--mono); white-space:nowrap; }
+.ot-ontime { background:var(--green-bg); color:var(--green); }
+.ot-late { background:var(--red-bg); color:var(--red); }
+.ot-early { background:var(--blue-light); color:var(--blue); }
+.ot-pending { background:#EEF0F4; color:var(--text-2); }
+.date-cell { min-width:90px; }
+.actual-date { font-size:12px; color:var(--green); font-weight:500; }
+.slippage-warn { color:var(--amber); font-size:11px; }
+.slippage-bad { color:var(--red); font-size:11px; }
+
+.assignment-pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;}
+.ap-individual{background:var(--blue-light);color:var(--blue);}
+.ap-group{background:var(--green-bg);color:var(--green);}
+.ap-subgroup{background:var(--purple-bg);color:var(--purple);}
+.watcher-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.watcher-chip{display:inline-flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:99px;padding:2px 8px;font-size:11px;}
+.group-badge{background:var(--green-bg);color:var(--green);font-size:11px;padding:2px 8px;border-radius:99px;font-weight:500;}
+.subgroup-badge{background:var(--purple-bg);color:var(--purple);font-size:11px;padding:2px 8px;border-radius:99px;font-weight:500;}
+.onboard-banner{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-3) 100%);color:#fff;border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;gap:16px;}
+.onboard-icon{width:44px;height:44px;background:rgba(255,255,255,0.12);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.onboard-body{flex:1;}
+.onboard-title{font-size:15px;font-weight:500;margin-bottom:4px;}
+.onboard-sub{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.5;}
+.teams-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:20px;}
+.teams-section h3{font-size:14px;font-weight:500;margin-bottom:14px;color:var(--navy);}
+.team-card{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;}
+.team-members-wrap{display:flex;gap:-4px;flex-wrap:wrap;gap:4px;}
+.assign-mode-sel{font-size:12px;padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:var(--font);}
+
+.main-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;}
+.main-tab{font-size:14px;padding:10px 22px;cursor:pointer;color:var(--text-2);border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .12s;font-weight:400;}
+.main-tab:hover{color:var(--text);}
+.main-tab.active{color:var(--navy);border-bottom-color:var(--navy);font-weight:500;}
+.wf-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden;transition:box-shadow .15s;}
+.wf-card:hover{box-shadow:var(--shadow-md);}
+.wf-header{display:flex;align-items:center;gap:10px;padding:14px 18px;cursor:pointer;flex-wrap:wrap;border-left:3px solid var(--blue-2);}
+.wf-header:hover{background:var(--bg);}
+.wf-name{font-size:14px;font-weight:500;flex:1;min-width:120px;}
+.cadence-badge{font-size:11px;padding:2px 9px;border-radius:99px;font-family:var(--mono);white-space:nowrap;}
+.c-monthly{background:#EEF0F4;color:var(--navy);}
+.c-weekly{background:var(--blue-light);color:var(--blue);}
+.c-quarterly{background:var(--purple-bg);color:var(--purple);}
+.c-adhoc{background:var(--amber-bg);color:var(--amber);}
+.cycle-banner{background:var(--bg);border-bottom:1px solid var(--border);padding:10px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.cycle-label{font-size:12px;color:var(--text-2);}
+.cycle-val{font-size:13px;font-weight:500;color:var(--navy);}
+.cycle-prog-wrap{flex:1;min-width:120px;height:4px;background:var(--border);border-radius:99px;overflow:hidden;}
+.cycle-prog-bar{height:100%;background:var(--blue-2);border-radius:99px;transition:width .3s;}
+.cycle-prog-bar.done{background:var(--green);}
+.history-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--border);font-size:12px;}
+.history-row:last-child{border-bottom:none;}
+.hist-name{flex:1;font-weight:500;}
+.hist-stat{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:99px;}
+.hs-ok{background:var(--green-bg);color:var(--green);}
+.hs-late{background:var(--red-bg);color:var(--red);}
+.hs-partial{background:var(--amber-bg);color:var(--amber);}
+.rel-day{font-family:var(--mono);font-size:11px;color:var(--text-3);}
+
+.geo-badge{font-size:10px;padding:2px 7px;border-radius:99px;font-family:var(--mono);font-weight:500;white-space:nowrap;letter-spacing:0.03em;}
+.geo-FR{background:#EEF4FF;color:#1B4FA8;}
+.geo-NL{background:#FFF3E0;color:#8A4500;}
+.geo-NO{background:#FDEAEA;color:#A81B1B;}
+.geo-Group{background:#0A1628;color:#FFFFFF;}
+.geo-all{background:#EEF0F4;color:#3A3830;}
+
+.celebrate-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.85);background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px 40px;text-align:center;z-index:1000;box-shadow:0 20px 60px rgba(10,22,40,0.18);min-width:300px;max-width:380px;animation:celebrateIn 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards;}
+@keyframes celebrateIn{from{opacity:0;transform:translate(-50%,-50%) scale(0.75);}to{opacity:1;transform:translate(-50%,-50%) scale(1);}}
+@keyframes celebrateOut{from{opacity:1;transform:translate(-50%,-50%) scale(1);}to{opacity:0;transform:translate(-50%,-50%) scale(0.85);}}
+.celebrate-overlay{position:fixed;inset:0;background:rgba(10,22,40,0.25);z-index:999;animation:fadeIn 0.2s ease forwards;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.celebrate-emoji{font-size:48px;margin-bottom:12px;display:block;animation:bounce 0.6s ease 0.3s both;}
+@keyframes bounce{0%{transform:scale(1);}40%{transform:scale(1.3);}70%{transform:scale(0.9);}100%{transform:scale(1);}}
+.celebrate-title{font-size:18px;font-weight:500;color:var(--navy);margin-bottom:6px;letter-spacing:-0.02em;}
+.celebrate-msg{font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:20px;}
+.celebrate-name{font-weight:600;color:var(--blue);}
+.celebrate-days{display:inline-block;background:var(--green-bg);color:var(--green);font-family:var(--mono);font-size:12px;padding:3px 10px;border-radius:99px;margin-bottom:14px;font-weight:500;}
+.celebrate-close{background:var(--navy);color:#fff;border:none;border-radius:var(--radius-sm);padding:9px 24px;font-family:var(--font);font-size:13px;cursor:pointer;font-weight:500;}
+.celebrate-close:hover{background:var(--navy-2);}
+
+/* Dashboard */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
+.dash-grid-full{grid-column:1/-1;}
+.dash-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);}
+.dash-section h3{font-size:13px;font-weight:500;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.rag-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:13px;}
+.rag-row:last-child{border-bottom:none;}
+.rag-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.rag-green{background:var(--green);}.rag-amber{background:#EF9F27;}.rag-red{background:var(--red);}
+.rag-name{flex:1;font-weight:500;}
+.rag-meta{font-size:11px;color:var(--text-3);}
+.due-item{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:13px;}
+.due-item:last-child{border-bottom:none;}
+.due-item-name{flex:1;}
+.due-item-proj{font-size:11px;color:var(--text-3);}
+.blocked-item{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:13px;}
+.blocked-item:last-child{border-bottom:none;}
+.geo-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:12px;}
+.geo-bar-wrap{flex:1;height:6px;background:var(--border);border-radius:99px;overflow:hidden;}
+.geo-bar-fill{height:100%;border-radius:99px;}
+.dash-stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:10px;}
+.dash-stat{text-align:center;padding:10px 8px;background:var(--bg);border-radius:var(--radius-sm);}
+.dash-stat-val{font-size:22px;font-weight:300;letter-spacing:-0.03em;}
+.dash-stat-label{font-size:11px;color:var(--text-3);margin-top:2px;}
+/* Date reason */
+.date-reason-overlay{position:fixed;inset:0;background:rgba(10,22,40,0.4);display:flex;align-items:center;justify-content:center;z-index:300;padding:20px;}
+.date-reason-modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;width:420px;max-width:100%;box-shadow:var(--shadow-md);}
+.date-reason-modal h3{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:6px;}
+.date-reason-modal p{font-size:13px;color:var(--text-2);margin-bottom:16px;line-height:1.5;}
+.date-reason-modal input{width:100%;font-family:var(--font);font-size:13px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);}
+.date-reason-modal input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,95,168,0.1);}
+.date-reason-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);}
+/* Subtasks */
+.subtask-wrap{padding:0 0 0 32px;border-left:2px solid var(--blue-light);margin:0 0 0 18px;}
+.subtask-row{display:flex;align-items:center;gap:8px;padding:5px 12px;border-bottom:0.5px solid var(--border);font-size:12px;}
+.subtask-row:last-child{border-bottom:none;}
+.subtask-row:hover{background:var(--bg);}
+.subtask-check{width:14px;height:14px;accent-color:var(--blue);cursor:pointer;flex-shrink:0;}
+.subtask-name{flex:1;color:var(--text);}
+.subtask-name.done{text-decoration:line-through;color:var(--text-3);}
+.subtask-owner{font-size:11px;color:var(--text-3);white-space:nowrap;}
+.subtask-due{font-size:11px;white-space:nowrap;}
+.subtask-add-row{display:flex;gap:6px;padding:6px 12px;background:var(--bg);align-items:center;}
+.subtask-add-row input,.subtask-add-row select{font-size:11px;padding:3px 7px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:var(--font);}
+.task-expand-btn{font-size:10px;color:var(--text-3);cursor:pointer;padding:1px 5px;border-radius:3px;border:none;background:transparent;}
+.task-expand-btn:hover{background:var(--bg);color:var(--text);}
+.notes-panel{padding:10px 18px 12px;border-top:0.5px solid var(--border);background:var(--bg);}
+.notes-panel label{font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.04em;color:var(--text-2);display:block;margin-bottom:5px;}
+.notes-panel textarea{width:100%;font-family:var(--font);font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);resize:vertical;min-height:70px;line-height:1.5;}
+/* Comment thread */
+.task-thread-overlay{position:fixed;inset:0;background:rgba(10,22,40,0.45);display:flex;align-items:center;justify-content:center;z-index:300;padding:20px;}
+.task-thread-modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);width:520px;max-width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:var(--shadow-md);}
+.task-thread-header{padding:18px 22px 14px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.task-thread-title{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:2px;}
+.task-thread-sub{font-size:12px;color:var(--text-2);}
+.task-thread-body{flex:1;overflow-y:auto;padding:16px 22px;}
+.tn-comment{display:flex;gap:10px;margin-bottom:14px;}
+.tn-comment-body{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;}
+.tn-comment-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
+.tn-comment-author{font-size:12px;font-weight:500;color:var(--text);}
+.tn-comment-ts{font-size:11px;color:var(--text-3);font-family:var(--mono);}
+.tn-comment-text{font-size:13px;color:var(--text);line-height:1.6;white-space:pre-wrap;word-break:break-word;}
+.tn-mention{background:var(--blue-light);color:var(--blue);border-radius:3px;padding:0 3px;font-weight:500;}
+.tn-tagged-banner{background:var(--amber-bg);border:1px solid #F5D8A0;border-radius:var(--radius-sm);padding:6px 12px;font-size:12px;color:var(--amber);margin-bottom:12px;}
+.task-thread-input{padding:14px 22px 18px;border-top:1px solid var(--border);flex-shrink:0;}
+.thread-textarea-wrap{position:relative;}
+.thread-textarea{width:100%;font-family:var(--font);font-size:13px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);resize:none;min-height:80px;line-height:1.6;}
+.thread-textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,95,168,0.1);}
+.mention-dropdown{position:absolute;bottom:calc(100% + 4px);left:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-md);z-index:400;min-width:180px;max-height:160px;overflow-y:auto;}
+.mention-item{display:flex;align-items:center;gap:8px;padding:7px 12px;font-size:13px;cursor:pointer;}
+.mention-item:hover{background:var(--bg);}
+.thread-hint{font-size:11px;color:var(--text-3);}
+.thread-actions{display:flex;gap:8px;}
+.tn-empty{text-align:center;padding:24px;color:var(--text-3);font-size:13px;}
+.translation-block{margin-top:5px;padding:6px 10px;background:var(--blue-light);border-left:3px solid var(--blue-2);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:12px;color:var(--blue);line-height:1.5;}
+.translation-block .tl-label{font-size:10px;font-family:var(--mono);color:var(--blue);opacity:0.7;margin-bottom:2px;}
+/* Lang toggle */
+.lang-toggle{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,0.1);border-radius:99px;padding:3px 6px;font-size:11px;font-family:var(--mono);}
+.lang-btn{background:transparent;border:none;color:rgba(255,255,255,0.6);cursor:pointer;padding:2px 6px;border-radius:99px;font-family:var(--mono);font-size:11px;}
+.lang-btn.active{background:rgba(255,255,255,0.2);color:#fff;}
+.translate-btn{font-size:10px;padding:1px 7px;border-radius:99px;border:1px solid var(--blue-light);background:var(--blue-light);color:var(--blue);cursor:pointer;font-family:var(--mono);margin-left:5px;}
+.translated-label{font-size:10px;background:var(--green-bg);color:var(--green);border-radius:99px;padding:1px 6px;font-family:var(--mono);margin-left:4px;}
+/* Backup */
+.import-overlay{position:fixed;inset:0;background:rgba(10,22,40,0.45);display:flex;align-items:center;justify-content:center;z-index:400;padding:20px;}
+.import-modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;width:440px;max-width:100%;box-shadow:var(--shadow-md);}
+.import-modal h3{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:6px;}
+.import-modal p{font-size:13px;color:var(--text-2);line-height:1.5;margin-bottom:18px;}
+.import-drop{border:2px dashed var(--border);border-radius:var(--radius);padding:28px;text-align:center;cursor:pointer;}
+.import-drop:hover,.import-drop.dragover{border-color:var(--blue);background:var(--blue-light);}
+.import-drop-label{font-size:13px;color:var(--text-2);}
+.import-drop-sub{font-size:11px;color:var(--text-3);margin-top:4px;}
+.import-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--border);}
+/* Main tabs */
+.main-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;}
+.main-tab{font-size:14px;padding:10px 22px;cursor:pointer;color:var(--text-2);border-bottom:3px solid transparent;margin-bottom:-2px;}
+.main-tab:hover{color:var(--text);}
+.main-tab.active{color:var(--navy);border-bottom-color:var(--navy);font-weight:500;}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+
+const GEOS = ["FR","NL","NO","Group"];
+function geoBadge(g){
+  if(!g) return '<span class="geo-badge geo-all">—</span>';
+  return `<span class="geo-badge geo-${g}">${g}</span>`;
+}
+
+const PALETTE=[{bg:"#DDEAF8",fg:"#1B5FA8"},{bg:"#E4F5EE",fg:"#0E6B4A"},{bg:"#FDF2DC",fg:"#8A5200"},{bg:"#EEEAF8",fg:"#4A2AB8"},{bg:"#FAEAEA",fg:"#A81B1B"},{bg:"#FDF6E0",fg:"#C8960A"},{bg:"#EEF0F4",fg:"#2A3858"},{bg:"#F0EAF8",fg:"#6A2A9A"}];
+const mc={};let ci=0;
+function getC(n){if(!n)return PALETTE[0];if(!mc[n])mc[n]=PALETTE[ci++%PALETTE.length];return mc[n];}
+function ini(n){return(n||"?").trim().split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase();}
+function av(n,sz=24){const c=getC(n);return`<span class="avatar" style="width:${sz}px;height:${sz}px;font-size:${sz<=24?9:11}px;background:${c.bg};color:${c.fg}">${ini(n)}</span>`;}
+
+const today=new Date();today.setHours(0,0,0,0);
+function fd(d){if(!d)return"—";return new Date(d+"T00:00:00").toLocaleDateString("en-IE",{day:"numeric",month:"short",year:"2-digit"});}
+function fdShort(d){if(!d)return"—";return new Date(d+"T00:00:00").toLocaleDateString("en-IE",{day:"numeric",month:"short"});}
+function dc(d,st){if(!d||st==="Complete")return"due-ok";const diff=(new Date(d+"T00:00:00")-today)/86400000;if(diff<0)return"due-over";if(diff<=5)return"due-soon";return"due-ok";}
+function pct(tasks){if(!tasks.length)return 0;return Math.round(tasks.filter(t=>t.status==="Complete").length/tasks.length*100);}
+function scls(s){return{["Not started"]:"s-ns","In progress":"s-ip","Review":"s-rv","Complete":"s-co","Blocked":"s-bl"}[s]||"s-ns";}
+function pcls(p){return{High:"p-h",Medium:"p-m",Low:"p-l"}[p]||"p-m";}
+function fh(h){if(!h)return"—";return h===1?"1 hr":`${h} hrs`;}
+function stkCls(r){return{Responsible:"stk-r",Accountable:"stk-a",Consulted:"stk-c",Informed:"stk-i"}[r]||"stk-i";}
+
+const DEF={"nextPid": 6, "nextTid": 200, "activeTab": {}, "projects": [{"id": 1, "name": "Cashflow reporting via Planful", "type": "Reporting improvement", "owner": "M. White", "desc": "Consolidated cashflow reporting across 3 ERP sources via Planful. Data lake already connected. Key risk: balance sheet movements validation across all ERPs.", "due": "2026-06-30", "expanded": false, "estEnabled": true, "stakeholders": [{"id": 1, "name": "CFO", "role": "Accountable"}, {"id": 2, "name": "M. White", "role": "Responsible"}, {"id": 3, "name": "Finance Controller", "role": "Consulted"}, {"id": 4, "name": "ERP SMEs", "role": "Consulted"}, {"id": 5, "name": "Data Engineer", "role": "Consulted"}, {"id": 6, "name": "Planful Admin", "role": "Responsible"}], "comments": [{"id": 1, "author": "M. White", "text": "Project initiated. 45 tasks across 8 phases: Initiation, Requirements, Planful Config, BS Validation, CF Build, UAT, Reporting & Go-Live. Data lake already connected — focus is on ERP mapping and BS movement validation.", "ts": "29 Apr, 09:00"}, {"id": 2, "author": "M. White", "text": "Timeline compressed to target 30 Jun 2026 go-live. 46 remaining tasks redistributed across 44 working days (30 Apr – 30 Jun). Approximately 1.0 tasks per working day on average.", "ts": "29 Apr, 10:00"}, {"id": 5, "author": "M. White", "text": "Target locked at 30 Jun 2026. Schedule compressed to 1 task per working day across 40 available days (excl. 4 French holidays). 12 high-risk tasks flagged in Phases 4 and 6 — BS Validation and UAT. Recommend parallel workstreams for Phase 4 reconciliations and early mobilisation of ERP SMEs. CFO to be briefed on timeline risk at kick-off.", "ts": "29 Apr, 11:30"}], "tasks": [{"id": 101, "name": "Define project charter & objectives", "owner": "M. White", "due": "2026-04-30", "status": "Not started", "priority": "High", "notes": "Confirm alignment with CFO before kick-off", "estHrs": 4, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-04-30", "dueHistory": [], "actualDate": ""}, {"id": 102, "name": "Identify & onboard project team", "owner": "M. White", "due": "2026-05-04", "status": "Not started", "priority": "High", "notes": "One SME needed per ERP", "estHrs": 3, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-04", "dueHistory": [], "actualDate": ""}, {"id": 103, "name": "Establish RACI & meeting cadence", "owner": "M. White", "due": "2026-05-05", "status": "Not started", "priority": "Medium", "notes": "Weekly steering, bi-weekly standups", "estHrs": 2, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-05", "dueHistory": [], "actualDate": ""}, {"id": 104, "name": "Document current-state cashflow process", "owner": "M. White", "due": "2026-05-06", "status": "Not started", "priority": "High", "notes": "Map each ERP cashflow data source", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-06", "dueHistory": [], "actualDate": ""}, {"id": 105, "name": "Agree project timeline & milestones", "owner": "M. White", "due": "2026-05-07", "status": "Not started", "priority": "High", "notes": "Baselined plan with CFO sign-off", "estHrs": 3, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-07", "dueHistory": [], "actualDate": ""}, {"id": 106, "name": "Document consolidated cashflow requirements", "owner": "M. White", "due": "2026-05-11", "status": "Not started", "priority": "High", "notes": "Direct/indirect, FX, intercompany eliminations", "estHrs": 6, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-11", "dueHistory": [], "actualDate": ""}, {"id": 107, "name": "Map ERP chart of accounts to cashflow lines", "owner": "M. White", "due": "2026-05-12", "status": "Not started", "priority": "High", "notes": "IAS 7 — Operating, Investing, Financing. Document exceptions per ERP", "estHrs": 8, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-12", "dueHistory": [], "actualDate": ""}, {"id": 108, "name": "Identify balance sheet movement drivers", "owner": "M. White", "due": "2026-05-13", "status": "Not started", "priority": "High", "notes": "AR, AP, inventory, provisions — key validation workstream", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-13", "dueHistory": [], "actualDate": ""}, {"id": 109, "name": "Define intercompany elimination rules", "owner": "M. White", "due": "2026-05-15", "status": "Not started", "priority": "High", "notes": "IC cashflows to eliminate at group level across 3 ERPs", "estHrs": 4, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-15", "dueHistory": [], "actualDate": ""}, {"id": 110, "name": "Document FX translation policy", "owner": "M. White", "due": "2026-05-18", "status": "Not started", "priority": "Medium", "notes": "Confirm average vs closing rate per entity/currency", "estHrs": 2, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-18", "dueHistory": [], "actualDate": ""}, {"id": 111, "name": "Design target Planful report layout", "owner": "M. White", "due": "2026-05-19", "status": "Not started", "priority": "High", "notes": "P&L-to-CF bridge, summary CF, ERP drill-down. Get sign-off before build", "estHrs": 6, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-19", "dueHistory": [], "actualDate": ""}, {"id": 112, "name": "Obtain business sign-off on requirements", "owner": "M. White", "due": "2026-05-20", "status": "Not started", "priority": "High", "notes": "Gate: Finance Director & CFO sign-off before Phase 3", "estHrs": 2, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-20", "dueHistory": [], "actualDate": ""}, {"id": 113, "name": "Audit existing Planful dimension structure", "owner": "M. White", "due": "2026-05-21", "status": "Not started", "priority": "High", "notes": "Review entities, accounts, time, currencies", "estHrs": 4, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-21", "dueHistory": [], "actualDate": ""}, {"id": 114, "name": "Create/extend account dimension for cashflow", "owner": "M. White", "due": "2026-05-22", "status": "Not started", "priority": "High", "notes": "Add OCF, ICF, FCF sub-categories to Planful", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-22", "dueHistory": [], "actualDate": ""}, {"id": 115, "name": "Configure ERP entity mapping in Planful", "owner": "M. White", "due": "2026-05-26", "status": "Not started", "priority": "High", "notes": "Map all 3 ERP entity hierarchies to Planful consolidation tree", "estHrs": 6, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-26", "dueHistory": [], "actualDate": ""}, {"id": 116, "name": "Set up intercompany elimination rules in Planful", "owner": "M. White", "due": "2026-05-27", "status": "Not started", "priority": "High", "notes": "Configure auto-elimination of IC cashflow transactions", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-27", "dueHistory": [], "actualDate": ""}, {"id": 117, "name": "Configure FX translation for cashflow", "owner": "M. White", "due": "2026-05-28", "status": "Not started", "priority": "Medium", "notes": "Average/closing rate logic per entity in Planful", "estHrs": 3, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-28", "dueHistory": [], "actualDate": ""}, {"id": 118, "name": "Build data load template / integration spec", "owner": "M. White", "due": "2026-05-29", "status": "Not started", "priority": "High", "notes": "Data already in lake — focus on column mapping and load frequency", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-05-29", "dueHistory": [], "actualDate": ""}, {"id": 119, "name": "Extract opening & closing BS snapshots", "owner": "M. White", "due": "2026-06-01", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: BS snapshot extraction across 3 ERPs — allow parallel workstreams | Validate row counts vs ERP source", "estHrs": 4, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-01", "dueHistory": [], "actualDate": ""}, {"id": 120, "name": "Compute period-on-period BS movements", "owner": "M. White", "due": "2026-06-02", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: Delta calculation — flag anomalies vs prior year immediately | Calculate BS delta per entity; flag anomalies vs prior year", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-02", "dueHistory": [], "actualDate": ""}, {"id": 121, "name": "Reconcile BS movements to ERP sub-ledger", "owner": "M. White", "due": "2026-06-03", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: Sub-ledger reconciliation — one pack per ERP, highest effort task | One reconciliation pack per ERP — AR, AP, inventory, fixed assets", "estHrs": 8, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-03", "dueHistory": [], "actualDate": ""}, {"id": 122, "name": "Validate non-cash adjustment items", "owner": "M. White", "due": "2026-06-04", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: Non-cash items — D&A and provisions must tie to GL | Depreciation, amortisation, provisions, impairments per ERP", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-04", "dueHistory": [], "actualDate": ""}, {"id": 123, "name": "Identify & resolve BS movement exceptions", "owner": "M. White", "due": "2026-06-05", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: Exception resolution — log root cause, may require IT involvement | Log root cause — timing, FX, system gaps. Track in issue log", "estHrs": 6, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-05", "dueHistory": [], "actualDate": ""}, {"id": 124, "name": "Finance sign-off on validated BS movements", "owner": "M. White", "due": "2026-06-08", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: Finance Controller gate — do not proceed to Phase 5 without sign-off | Gate: Finance Controller approval before Phase 5", "estHrs": 2, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-08", "dueHistory": [], "actualDate": ""}, {"id": 125, "name": "Build indirect method cashflow formula in Planful", "owner": "M. White", "due": "2026-06-09", "status": "Not started", "priority": "High", "notes": "Net Income + D&A +/- WC movements +/- Other", "estHrs": 8, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-09", "dueHistory": [], "actualDate": ""}, {"id": 126, "name": "Map investing cashflows from ERP data", "owner": "M. White", "due": "2026-06-10", "status": "Not started", "priority": "High", "notes": "Capex, disposal proceeds, acquisition payments per ERP", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-10", "dueHistory": [], "actualDate": ""}, {"id": 127, "name": "Map financing cashflows from ERP data", "owner": "M. White", "due": "2026-06-11", "status": "Not started", "priority": "High", "notes": "Debt drawdowns, dividend payments, equity transactions", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-11", "dueHistory": [], "actualDate": ""}, {"id": 128, "name": "Build intercompany elimination layer", "owner": "M. White", "due": "2026-06-12", "status": "Not started", "priority": "High", "notes": "Validate net IC cashflow = zero at group level", "estHrs": 4, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-12", "dueHistory": [], "actualDate": ""}, {"id": 129, "name": "Build opening/closing cash reconciliation", "owner": "M. White", "due": "2026-06-15", "status": "Not started", "priority": "High", "notes": "Key integrity check: OCF + ICF + FCF + FX on cash = BS movement", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-15", "dueHistory": [], "actualDate": ""}, {"id": 130, "name": "Configure ERP drill-down views", "owner": "M. White", "due": "2026-06-16", "status": "Not started", "priority": "Medium", "notes": "ERP-level CF views showing each ERP's contribution to group total", "estHrs": 4, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-16", "dueHistory": [], "actualDate": ""}, {"id": 131, "name": "Prepare UAT test scripts", "owner": "M. White", "due": "2026-06-17", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: UAT scripts must cover min 2 historical periods | Cover BS movement roll, IC elimination, FX, cash tie, drill-down — min 2 periods", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-17", "dueHistory": [], "actualDate": ""}, {"id": 132, "name": "ERP 1 — cashflow reconciliation", "owner": "M. White", "due": "2026-06-18", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: ERP 1 reconciliation — document ALL variances, no exceptions | Reconcile Planful output to ERP 1 statutory CF. Document all variances", "estHrs": 6, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-18", "dueHistory": [], "actualDate": ""}, {"id": 133, "name": "ERP 2 — cashflow reconciliation", "owner": "M. White", "due": "2026-06-19", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: ERP 2 reconciliation — document ALL variances, no exceptions | Reconcile Planful output to ERP 2 statutory CF. Document all variances", "estHrs": 6, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-19", "dueHistory": [], "actualDate": ""}, {"id": 134, "name": "ERP 3 — cashflow reconciliation", "owner": "M. White", "due": "2026-06-22", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: ERP 3 reconciliation — document ALL variances, no exceptions | Reconcile Planful output to ERP 3 statutory CF. Document all variances", "estHrs": 6, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-22", "dueHistory": [], "actualDate": ""}, {"id": 135, "name": "Resolve UAT defects", "owner": "M. White", "due": "2026-06-23", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: Defect resolution — P1/P2 issues could delay go-live | Triage and fix all P1/P2 defects; re-test to closure. Use defect log", "estHrs": 8, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-23", "dueHistory": [], "actualDate": ""}, {"id": 136, "name": "Finance UAT sign-off", "owner": "M. White", "due": "2026-06-24", "status": "Not started", "priority": "High", "notes": "⚠️ RISK: Finance sign-off gate — final gate before go-live | Gate: Finance Director & Controllers approve go-live readiness", "estHrs": 2, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-24", "dueHistory": [], "actualDate": ""}, {"id": 137, "name": "Build management cashflow report pack", "owner": "M. White", "due": "2026-06-25", "status": "Not started", "priority": "High", "notes": "Exec summary CF, waterfall bridge, ERP breakdown, BS movement schedule", "estHrs": 8, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-25", "dueHistory": [], "actualDate": ""}, {"id": 138, "name": "Configure report distribution & access controls", "owner": "M. White", "due": "2026-06-26", "status": "Not started", "priority": "Medium", "notes": "Planful user roles, report access, automated distribution", "estHrs": 3, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-26", "dueHistory": [], "actualDate": ""}, {"id": 139, "name": "Produce user guide & training materials", "owner": "M. White", "due": "2026-06-29", "status": "Not started", "priority": "Medium", "notes": "How to run/refresh reports, interpret BS movements, raise data queries", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-29", "dueHistory": [], "actualDate": ""}, {"id": 140, "name": "Deliver end-user training", "owner": "M. White", "due": "2026-06-30", "status": "Not started", "priority": "Medium", "notes": "Train Finance team and business partners", "estHrs": 4, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-30", "dueHistory": [], "actualDate": ""}, {"id": 141, "name": "Obtain CFO/sponsor sign-off", "owner": "M. White", "due": "2026-06-30", "status": "Not started", "priority": "High", "notes": "Final gate — present to CFO, obtain go-live approval", "estHrs": 2, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-30", "dueHistory": [], "actualDate": ""}, {"id": 142, "name": "Execute go-live data load", "owner": "M. White", "due": "2026-06-30", "status": "Not started", "priority": "High", "notes": "First production period load from data lake into Planful", "estHrs": 4, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-30", "dueHistory": [], "actualDate": ""}, {"id": 143, "name": "Perform production BS movement validation", "owner": "M. White", "due": "2026-06-30", "status": "Not started", "priority": "High", "notes": "Repeat BS reconciliation for live period — confirm no new exceptions", "estHrs": 5, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-30", "dueHistory": [], "actualDate": ""}, {"id": 144, "name": "Publish first live consolidated cashflow report", "owner": "M. White", "due": "2026-06-30", "status": "Not started", "priority": "High", "notes": "Distribute to stakeholders; support queries during initial review", "estHrs": 3, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-30", "dueHistory": [], "actualDate": ""}, {"id": 145, "name": "Hypercare support period", "owner": "M. White", "due": "2026-06-30", "status": "Not started", "priority": "Medium", "notes": "4 weeks post go-live; triage issues within 24hrs", "estHrs": 10, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-30", "dueHistory": [], "actualDate": ""}, {"id": 146, "name": "Post-implementation review", "owner": "M. White", "due": "2026-06-30", "status": "Not started", "priority": "Low", "notes": "Lessons learned, outstanding enhancements, handover to BAU", "estHrs": 4, "loggedHrs": 0, "geo": "Group", "originalDue": "2026-06-30", "dueHistory": [], "actualDate": ""}]}, {"id": 2, "name": "Workforce Planning via Planful", "type": "Process improvement", "owner": "M. White", "desc": "Implement Workforce Planning module in Planful including compensation rules setup, reporting design and upload.", "due": "2026-06-30", "expanded": false, "stakeholders": [{"id": 1, "name": "M. White", "role": "Responsible"}, {"id": 2, "name": "Charlie (CFO Solutions)", "role": "Consulted"}], "comments": [{"id": 1, "author": "M. White", "text": "Set up of compensation rules, refinement of reporting and design with Charlie from CFO Solutions completed. WFP module upload scheduled for next week.", "ts": "30 Mar, 09:00"}], "tasks": [{"id": 4, "name": "Set up compensation rules", "owner": "M. White", "due": "2026-04-15", "status": "Complete", "priority": "High", "notes": "Done with Charlie from CFO Solutions", "estHrs": 5, "loggedHrs": 5, "originalDue": "2026-04-15", "dueHistory": [], "actualDate": "2026-04-15", "geo": "Group"}, {"id": 5, "name": "Refine reporting design", "owner": "M. White", "due": "2026-04-25", "status": "Complete", "priority": "High", "notes": "Design agreed with stakeholders", "estHrs": 4, "loggedHrs": 4, "originalDue": "2026-04-25", "dueHistory": [], "actualDate": "2026-04-25", "geo": "Group"}, {"id": 6, "name": "Upload WFP module to Planful", "owner": "M. White", "due": "2026-05-07", "status": "In progress", "priority": "High", "notes": "Scheduled for next week", "estHrs": 3, "loggedHrs": 1, "originalDue": "2026-05-07", "dueHistory": [], "actualDate": "", "geo": "Group"}, {"id": 7, "name": "Test and validate outputs", "owner": "M. White", "due": "2026-06-15", "status": "Not started", "priority": "Medium", "notes": "", "estHrs": 4, "loggedHrs": 0, "originalDue": "2026-06-15", "dueHistory": [], "actualDate": "", "geo": "Group"}]}, {"id": 3, "name": "Transactional level BI / PF Reporting", "type": "Reporting improvement", "owner": "M. White", "desc": "Build transactional-level business intelligence and P&F reporting capability. Highly dependent on IT team capacity and prioritisation.", "due": "2026-09-30", "expanded": false, "stakeholders": [{"id": 1, "name": "M. White", "role": "Responsible"}, {"id": 2, "name": "IT Team", "role": "Consulted"}], "comments": [{"id": 1, "author": "M. White", "text": "Progress highly dependent on IT team capacity and prioritisation. No start date confirmed yet.", "ts": "30 Mar, 09:00"}], "tasks": [{"id": 8, "name": "Align with IT team on capacity and timeline", "owner": "M. White", "due": "2026-05-30", "status": "Not started", "priority": "High", "notes": "Blocker: IT prioritisation", "estHrs": 2, "loggedHrs": 0, "originalDue": "2026-05-30", "dueHistory": [], "actualDate": "", "geo": "Group"}, {"id": 9, "name": "Define reporting requirements", "owner": "M. White", "due": "2026-06-30", "status": "Not started", "priority": "High", "notes": "", "estHrs": 5, "loggedHrs": 0, "originalDue": "2026-06-30", "dueHistory": [], "actualDate": "", "geo": "Group"}, {"id": 10, "name": "Build and test BI reports", "owner": "M. White", "due": "2026-08-30", "status": "Not started", "priority": "Medium", "notes": "", "estHrs": 15, "loggedHrs": 0, "originalDue": "2026-08-30", "dueHistory": [], "actualDate": "", "geo": "Group"}, {"id": 11, "name": "Sign-off and deploy", "owner": "M. White", "due": "2026-09-20", "status": "Not started", "priority": "Medium", "notes": "", "estHrs": 3, "loggedHrs": 0, "originalDue": "2026-09-20", "dueHistory": [], "actualDate": "", "geo": "Group"}]}, {"id": 4, "name": "Product P&Ls", "type": "Reporting improvement", "owner": "M. White", "desc": "Develop product-level P&L reporting to provide granular profitability visibility across the product portfolio.", "due": "2026-06-30", "expanded": false, "stakeholders": [{"id": 1, "name": "M. White", "role": "Responsible"}], "comments": [], "tasks": [{"id": 12, "name": "Define product P&L structure and dimensions", "owner": "M. White", "due": "2026-05-15", "status": "Not started", "priority": "High", "notes": "", "estHrs": 4, "loggedHrs": 0, "originalDue": "2026-05-15", "dueHistory": [], "actualDate": "", "geo": "Group"}, {"id": 13, "name": "Map cost allocations to products", "owner": "M. White", "due": "2026-05-30", "status": "Not started", "priority": "High", "notes": "", "estHrs": 6, "loggedHrs": 0, "originalDue": "2026-05-30", "dueHistory": [], "actualDate": "", "geo": "Group"}, {"id": 14, "name": "Build reports and validate", "owner": "M. White", "due": "2026-06-20", "status": "Not started", "priority": "Medium", "notes": "", "estHrs": 8, "loggedHrs": 0, "originalDue": "2026-06-20", "dueHistory": [], "actualDate": "", "geo": "Group"}]}], "workflows": [{"id": 10, "name": "Latest Estimate (LE) Cycle", "cadence": "quarterly", "desc": "Quarterly Latest Estimate cycle covering all business unit reviews, HC integration, deep-dive sessions and final CFO submission.", "anchorLabel": "Submission deadline", "expanded": true, "template": [{"id": 1, "name": "Kick-off — distribute LE pack & guidance", "owner": "M. White", "relDay": -21, "priority": "High", "estHrs": 2, "geo": "Group", "notes": "Send template, assumptions and timeline to all BU leads"}, {"id": 2, "name": "Issue LE assumptions & macro inputs", "owner": "M. White", "relDay": -20, "priority": "High", "estHrs": 2, "geo": "Group", "notes": "FX rates, inflation, headcount growth assumptions"}, {"id": 3, "name": "BU submissions received", "owner": "M. White", "relDay": -14, "priority": "High", "estHrs": 1, "geo": "Group", "notes": "Chase outstanding submissions — hard deadline"}, {"id": 4, "name": "P&L review — France", "owner": "M. White", "relDay": -13, "priority": "High", "estHrs": 3, "geo": "FR", "notes": "Review revenue, COGS and opex vs prior LE"}, {"id": 5, "name": "P&L review — Netherlands", "owner": "M. White", "relDay": -12, "priority": "High", "estHrs": 3, "geo": "NL", "notes": "Review revenue, COGS and opex vs prior LE"}, {"id": 6, "name": "P&L review — Norway", "owner": "M. White", "relDay": -11, "priority": "High", "estHrs": 3, "geo": "NO", "notes": "Review revenue, COGS and opex vs prior LE"}, {"id": 7, "name": "Headcount review & HC savings integration", "owner": "M. White", "relDay": -10, "priority": "High", "estHrs": 4, "geo": "Group", "notes": "Integrate approved HC changes. Validate vs HRIS"}, {"id": 8, "name": "Consolidation & intercompany elimination", "owner": "M. White", "relDay": -9, "priority": "High", "estHrs": 4, "geo": "Group", "notes": "Consolidate all BU submissions, eliminate IC"}, {"id": 9, "name": "Variance analysis vs prior LE & budget", "owner": "M. White", "relDay": -8, "priority": "High", "estHrs": 5, "geo": "Group", "notes": "Bridge prior LE to current LE — key movements narrative"}, {"id": 10, "name": "Deep-dive — underperforming BUs", "owner": "M. White", "relDay": -7, "priority": "High", "estHrs": 4, "geo": "Group", "notes": "Extended review sessions for BUs below plan"}, {"id": 11, "name": "CFO pre-read pack prepared", "owner": "M. White", "relDay": -5, "priority": "High", "estHrs": 3, "geo": "Group", "notes": "Executive summary, bridge charts, key risks & opps"}, {"id": 12, "name": "CFO review meeting", "owner": "M. White", "relDay": -4, "priority": "High", "estHrs": 2, "geo": "Group", "notes": "Present to CFO — capture actions and adjustments"}, {"id": 13, "name": "Incorporate CFO feedback & adjustments", "owner": "M. White", "relDay": -3, "priority": "High", "estHrs": 3, "geo": "Group", "notes": "Rework numbers based on CFO direction"}, {"id": 14, "name": "Final quality check & sign-off", "owner": "M. White", "relDay": -2, "priority": "High", "estHrs": 2, "geo": "Group", "notes": "Tie out all numbers, check formatting, get sign-off"}, {"id": 15, "name": "Submit LE to group / board", "owner": "M. White", "relDay": 0, "priority": "High", "estHrs": 1, "geo": "Group", "notes": "Anchor day — submission deadline"}, {"id": 16, "name": "Post-submission BU feedback distribution", "owner": "M. White", "relDay": 2, "priority": "Medium", "estHrs": 1, "geo": "Group", "notes": "Share final approved LE with BU leads"}, {"id": 17, "name": "LE vs actuals tracking set up", "owner": "M. White", "relDay": 3, "priority": "Medium", "estHrs": 2, "geo": "Group", "notes": "Set up monthly tracking of actuals vs this LE"}], "cycles": [{"id": 9100, "anchor": "2026-07-16", "start": "2026-04-29", "label": "LE2 — FY2026", "tasks": [{"id": 9100, "name": "Kick-off — distribute LE pack & guidance", "owner": "M. White", "relDay": -21, "priority": "High", "estHrs": 2, "geo": "Group", "notes": "Send template, assumptions and timeline to all BU leads", "due": "2026-06-25", "originalDue": "2026-06-25", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9101, "name": "Issue LE assumptions & macro inputs", "owner": "M. White", "relDay": -20, "priority": "High", "estHrs": 2, "geo": "Group", "notes": "FX rates, inflation, headcount growth assumptions", "due": "2026-06-26", "originalDue": "2026-06-26", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9102, "name": "BU submissions received", "owner": "M. White", "relDay": -14, "priority": "High", "estHrs": 1, "geo": "Group", "notes": "Chase outstanding submissions — hard deadline", "due": "2026-07-02", "originalDue": "2026-07-02", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9103, "name": "P&L review — France", "owner": "M. White", "relDay": -13, "priority": "High", "estHrs": 3, "geo": "FR", "notes": "Review revenue, COGS and opex vs prior LE", "due": "2026-07-03", "originalDue": "2026-07-03", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9104, "name": "P&L review — Netherlands", "owner": "M. White", "relDay": -12, "priority": "High", "estHrs": 3, "geo": "NL", "notes": "Review revenue, COGS and opex vs prior LE", "due": "2026-07-06", "originalDue": "2026-07-06", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9105, "name": "P&L review — Norway", "owner": "M. White", "relDay": -11, "priority": "High", "estHrs": 3, "geo": "NO", "notes": "Review revenue, COGS and opex vs prior LE", "due": "2026-07-06", "originalDue": "2026-07-06", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9106, "name": "Headcount review & HC savings integration", "owner": "M. White", "relDay": -10, "priority": "High", "estHrs": 4, "geo": "Group", "notes": "Integrate approved HC changes. Validate vs HRIS", "due": "2026-07-06", "originalDue": "2026-07-06", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9107, "name": "Consolidation & intercompany elimination", "owner": "M. White", "relDay": -9, "priority": "High", "estHrs": 4, "geo": "Group", "notes": "Consolidate all BU submissions, eliminate IC", "due": "2026-07-07", "originalDue": "2026-07-07", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9108, "name": "Variance analysis vs prior LE & budget", "owner": "M. White", "relDay": -8, "priority": "High", "estHrs": 5, "geo": "Group", "notes": "Bridge prior LE to current LE — key movements narrative", "due": "2026-07-08", "originalDue": "2026-07-08", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9109, "name": "Deep-dive — underperforming BUs", "owner": "M. White", "relDay": -7, "priority": "High", "estHrs": 4, "geo": "Group", "notes": "Extended review sessions for BUs below plan", "due": "2026-07-09", "originalDue": "2026-07-09", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9110, "name": "CFO pre-read pack prepared", "owner": "M. White", "relDay": -5, "priority": "High", "estHrs": 3, "geo": "Group", "notes": "Executive summary, bridge charts, key risks & opps", "due": "2026-07-13", "originalDue": "2026-07-13", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9111, "name": "CFO review meeting", "owner": "M. White", "relDay": -4, "priority": "High", "estHrs": 2, "geo": "Group", "notes": "Present to CFO — capture actions and adjustments", "due": "2026-07-13", "originalDue": "2026-07-13", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9112, "name": "Incorporate CFO feedback & adjustments", "owner": "M. White", "relDay": -3, "priority": "High", "estHrs": 3, "geo": "Group", "notes": "Rework numbers based on CFO direction", "due": "2026-07-13", "originalDue": "2026-07-13", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9113, "name": "Final quality check & sign-off", "owner": "M. White", "relDay": -2, "priority": "High", "estHrs": 2, "geo": "Group", "notes": "Tie out all numbers, check formatting, get sign-off", "due": "2026-07-14", "originalDue": "2026-07-14", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9114, "name": "Submit LE to group / board", "owner": "M. White", "relDay": 0, "priority": "High", "estHrs": 1, "geo": "Group", "notes": "Anchor day — submission deadline", "due": "2026-07-16", "originalDue": "2026-07-16", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9115, "name": "Post-submission BU feedback distribution", "owner": "M. White", "relDay": 2, "priority": "Medium", "estHrs": 1, "geo": "Group", "notes": "Share final approved LE with BU leads", "due": "2026-07-20", "originalDue": "2026-07-20", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}, {"id": 9116, "name": "LE vs actuals tracking set up", "owner": "M. White", "relDay": 3, "priority": "Medium", "estHrs": 2, "geo": "Group", "notes": "Set up monthly tracking of actuals vs this LE", "due": "2026-07-21", "originalDue": "2026-07-21", "dueHistory": [], "status": "Not started", "actualDate": "", "loggedHrs": 0}]}], "history": [{"id": 9000, "anchor": "2026-04-16", "start": "2026-01-26", "label": "LE1 — FY2026", "tasks": [{"id": 1001, "name": "FY'26 flatfile distributed to GTM team", "owner": "M. White", "relDay": -49, "due": "2026-02-12", "status": "Complete", "priority": "High", "estHrs": 2, "loggedHrs": 2, "geo": "Group", "notes": "FY'26 bookings flatfile template and instructions distributed to GTM", "actualDate": "2026-02-12"}, {"id": 1002, "name": "GEC kick-off on LE1", "owner": "M. White", "relDay": -45, "due": "2026-02-25", "status": "Complete", "priority": "High", "estHrs": 3, "loggedHrs": 3, "geo": "Group", "notes": "Overview of AOP, Goals and Expectations. Full ELT. Attended ✓", "actualDate": "2026-02-27"}, {"id": 1003, "name": "Distribute FTE / headcount templates", "owner": "M. White", "relDay": -40, "due": "2026-01-26", "status": "Complete", "priority": "High", "estHrs": 1, "loggedHrs": 1, "geo": "Group", "notes": "Headcount templates to Exec and HC owners. Q4 LE3 FCST update", "actualDate": "2026-01-26"}, {"id": 1004, "name": "Country bookings review meetings", "owner": "M. White", "relDay": -30, "due": "2026-03-16", "status": "Complete", "priority": "High", "estHrs": 4, "loggedHrs": 4, "geo": "Group", "notes": "Review Q2 Bookings outlook and material FY impacts. Sales Ops, Finance & Country leadership", "actualDate": "2026-03-16"}, {"id": 1005, "name": "Business cases completed", "owner": "M. White", "relDay": -28, "due": "2026-02-02", "status": "Complete", "priority": "High", "estHrs": 3, "loggedHrs": 3, "geo": "Group", "notes": "Identify incremental revenue and expenses for LE1. Attended ✓", "actualDate": "2026-02-02"}, {"id": 1006, "name": "Finalised bookings / flat file locked", "owner": "M. White", "relDay": -26, "due": "2026-02-09", "status": "Complete", "priority": "High", "estHrs": 2, "loggedHrs": 2, "geo": "Group", "notes": "Sales Ops sign-off on bookings flatfile", "actualDate": "2026-02-09"}, {"id": 1007, "name": "FTE templates returned", "owner": "M. White", "relDay": -27, "due": "2026-02-06", "status": "Complete", "priority": "High", "estHrs": 1, "loggedHrs": 1, "geo": "Group", "notes": "Headcount templates returned from Exec and HC owners", "actualDate": "2026-02-06"}, {"id": 1008, "name": "LE1 business case alignment meeting", "owner": "M. White", "relDay": -27, "due": "2026-02-05", "status": "Complete", "priority": "High", "estHrs": 2, "loggedHrs": 2, "geo": "Group", "notes": "FP&A, Edouard, Owners, CEO, CFO. Attended ✓", "actualDate": "2026-02-05"}, {"id": 1009, "name": "Revenue model updated", "owner": "M. White", "relDay": -22, "due": "2026-02-14", "status": "Complete", "priority": "High", "estHrs": 4, "loggedHrs": 4, "geo": "Group", "notes": "Gather input from GTM org on bookings expectations by month", "actualDate": "2026-02-14"}, {"id": 1010, "name": "ARR growth model updated", "owner": "M. White", "relDay": -22, "due": "2026-02-14", "status": "Complete", "priority": "High", "estHrs": 3, "loggedHrs": 3, "geo": "Group", "notes": "2026 ARR target growth from Product", "actualDate": "2026-02-14"}, {"id": 1011, "name": "Revenue review meeting", "owner": "M. White", "relDay": -21, "due": "2026-02-15", "status": "Complete", "priority": "High", "estHrs": 2, "loggedHrs": 2, "geo": "Group", "notes": "Martin, Mike, Antoine, Aisha, Country MD. Attended ✓", "actualDate": "2026-02-15"}, {"id": 1012, "name": "Cost review meeting", "owner": "M. White", "relDay": -20, "due": "2026-02-16", "status": "Complete", "priority": "High", "estHrs": 2, "loggedHrs": 2, "geo": "Group", "notes": "Martin, Mike, Antoine, LH. Attended ✓", "actualDate": "2026-02-16"}, {"id": 1013, "name": "Exec reviews", "owner": "M. White", "relDay": -14, "due": "2026-04-01", "status": "Complete", "priority": "High", "estHrs": 6, "loggedHrs": 6, "geo": "Group", "notes": "Non-HC & HC templates returned. Full ELT. Attended ✓", "actualDate": "2026-04-01"}, {"id": 1014, "name": "CEO Draft 1 feedback and changes", "owner": "M. White", "relDay": -13, "due": "2026-02-23", "status": "Complete", "priority": "High", "estHrs": 3, "loggedHrs": 3, "geo": "Group", "notes": "Preliminary FY P&L before actualisation of Mar. Martin, Mike, Antoine", "actualDate": "2026-02-23"}, {"id": 1015, "name": "CEO Review Financials — 2nd pass", "owner": "M. White", "relDay": -7, "due": "2026-03-02", "status": "Complete", "priority": "High", "estHrs": 2, "loggedHrs": 2, "geo": "Group", "notes": "Martin, Mike, Antoine. Attended ✓", "actualDate": "2026-03-02"}, {"id": 1016, "name": "Flat file updated for April actuals", "owner": "M. White", "relDay": -7, "due": "2026-03-02", "status": "Complete", "priority": "High", "estHrs": 3, "loggedHrs": 3, "geo": "Group", "notes": "Material phasing deltas incorporated, confirmed by Sales/Sales Ops", "actualDate": "2026-03-02"}, {"id": 1017, "name": "P&L final with April actualisation", "owner": "M. White", "relDay": -5, "due": "2026-03-07", "status": "In progress", "priority": "High", "estHrs": 4, "loggedHrs": 2, "geo": "Group", "notes": "With April actuals", "actualDate": ""}, {"id": 1018, "name": "Final LE1 P&L agreed with CEO", "owner": "M. White", "relDay": -4, "due": "2026-03-08", "status": "In progress", "priority": "High", "estHrs": 2, "loggedHrs": 0, "geo": "Group", "notes": "Required for Board meeting 24th April. Martin, Mike, Antoine. Attended ✓", "actualDate": ""}, {"id": 1019, "name": "BOD + AOP presentation", "owner": "M. White", "relDay": 0, "due": "2026-04-16", "status": "Not started", "priority": "High", "estHrs": 4, "loggedHrs": 0, "geo": "Group", "notes": "Presentation of AOP to BOD for approval. Martin, Antoine", "actualDate": ""}, {"id": 1020, "name": "Louis / Ray / Mike — Non HC review", "owner": "M. White", "relDay": -26, "due": "2026-02-10", "status": "Complete", "priority": "Medium", "estHrs": 2, "loggedHrs": 2, "geo": "Group", "notes": "Ongoing supporting task", "actualDate": "2026-02-10"}, {"id": 1021, "name": "P&L actual load (LG/TJ)", "owner": "M. White", "relDay": -26, "due": "2026-02-10", "status": "Complete", "priority": "Medium", "estHrs": 2, "loggedHrs": 2, "geo": "Group", "notes": "Actual load into P&L model", "actualDate": "2026-02-10"}, {"id": 1022, "name": "Revenue LE prep — create DLR", "owner": "M. White", "relDay": -22, "due": "2026-02-14", "status": "Complete", "priority": "Medium", "estHrs": 3, "loggedHrs": 3, "geo": "Group", "notes": "DLR setup for revenue LE", "actualDate": "2026-02-14"}, {"id": 1023, "name": "Business case template", "owner": "M. White", "relDay": -28, "due": "2026-02-08", "status": "Complete", "priority": "Medium", "estHrs": 1, "loggedHrs": 1, "geo": "Group", "notes": "Template created", "actualDate": "2026-02-08"}], "closed": "2026-04-29"}], "comments": [{"id": 1, "author": "M. White", "text": "LE1 FY2026 cycle updated from tracker. 20 tasks complete, 2 in progress, 1 remaining. BOD & AOP presentation anchored to 16 Apr 2026. Total 53hrs logged of 61hrs estimated.", "ts": "29 Apr, 12:00"}, {"id": 2, "author": "M. White", "text": "LE1 closed and archived. LE2 cycle started — 17 tasks generated from template. Submission deadline: 16 Jul 2026. Kick-off (Day -21) due 2026-06-25.", "ts": "29 Apr, 13:00"}]}]};
+
+let state=null,currentUser=null,modalHtml=null;
+
+let undoStack = [];
+let toastTimer = null;
+
+function pushUndo(type, data) {
+  undoStack.push({ type, data });
+  if (undoStack.length > 10) undoStack.shift();
+}
+
+function showToast(msg, onUndo) {
+  const existing = document.getElementById("undo-toast");
+  if (existing) existing.remove();
+  if (toastTimer) clearTimeout(toastTimer);
+  const t = document.createElement("div");
+  t.className = "toast"; t.id = "undo-toast";
+  t.innerHTML = `<span>${msg}</span><button class="toast-undo" onclick="doUndo()">Undo</button>`;
+  document.body.appendChild(t);
+  toastTimer = setTimeout(() => { t.remove(); undoStack.pop(); }, 5000);
+}
+
+
+function onTimeStatus(t) {
+  if (!t.actualDate) return 'pending';
+  if (!t.due) return 'pending';
+  const actual = new Date(t.actualDate + 'T00:00:00');
+  const target = new Date(t.due + 'T00:00:00');
+  const diff = Math.round((actual - target) / 86400000);
+  if (diff <= 0) return 'early';
+  if (diff <= 3) return 'ontime';
+  return 'late';
+}
+function onTimeBadge(t) {
+  if (!t.actualDate) return '<span class="on-time-badge ot-pending">Pending</span>';
+  const actual = new Date(t.actualDate + 'T00:00:00');
+  const target = new Date(t.due + 'T00:00:00');
+  const diff = Math.round((actual - target) / 86400000);
+  if (diff < 0) return `<span class="on-time-badge ot-early">Early by ${Math.abs(diff)}d</span>`;
+  if (diff === 0) return `<span class="on-time-badge ot-ontime">On time</span>`;
+  if (diff <= 3) return `<span class="on-time-badge ot-ontime">+${diff}d</span>`;
+  return `<span class="on-time-badge ot-late">+${diff}d late</span>`;
+}
+function slippageDays(t) {
+  if (!t.originalDue || !t.due) return 0;
+  return Math.round((new Date(t.due+'T00:00:00') - new Date(t.originalDue+'T00:00:00')) / 86400000);
+}
+function updateTargetDate(pid, tid, newDue) {
+  const p = state.projects.find(x=>x.id===pid);
+  const t = p && p.tasks.find(x=>x.id===tid);
+  if (!t) return;
+  if (t.due === newDue) return;
+  const now = new Date();
+  const ts = now.toLocaleDateString('en-IE',{day:'numeric',month:'short'}) + ', ' + now.toLocaleTimeString('en-IE',{hour:'2-digit',minute:'2-digit'});
+  if (!t.dueHistory) t.dueHistory = [];
+  t.dueHistory.push({ from: t.due, to: newDue, by: currentUser.name, ts });
+  t.due = newDue;
+  save(); renderAdmin();
+}
+function updateActualDate(pid, tid, val) {
+  const p = state.projects.find(x=>x.id===pid);
+  const t = p && p.tasks.find(x=>x.id===tid);
+  if (!t) return;
+  t.actualDate = val;
+  // Auto-mark complete if actual date set
+  if (val && t.status !== 'Complete') { t.status = 'Complete'; }
+  save(); renderAdmin();
+}
+
+
+const CELEBRATE_MSGS = [
+  { emoji:"🎯", title:"Ahead of schedule!", msg:"That's what we call being a step ahead. The team notices." },
+  { emoji:"⚡", title:"Lightning fast!", msg:"Delivered early and delivered well. That's FP&A Ninja energy." },
+  { emoji:"🌟", title:"Crushed it!", msg:"Finishing early isn't luck — it's preparation and focus. Well done." },
+  { emoji:"🏆", title:"Early bird wins!", msg:"Deadlines are a ceiling, not a target. You just proved it." },
+  { emoji:"🚀", title:"Ahead of the curve!", msg:"The best kind of surprise for the team. Keep the momentum going." },
+  { emoji:"💪", title:"On fire!", msg:"Early completion keeps the whole team moving. Great work." },
+  { emoji:"🎉", title:"Smashed it!", msg:"Not just done — done early. That's the FP&A Ninjas standard." },
+  { emoji:"✨", title:"Outstanding!", msg:"Finishing ahead of time is a gift to the whole team. Thank you." }
+];
+
+function showCelebration(taskName, ownerName, daysEarly) {
+  const existing = document.getElementById("celebrate-overlay");
+  if (existing) existing.remove();
+
+  const msg = CELEBRATE_MSGS[Math.floor(Math.random() * CELEBRATE_MSGS.length)];
+  const daysText = daysEarly === 1 ? "1 day early" : `${daysEarly} days early`;
+
+  const overlay = document.createElement("div");
+  overlay.className = "celebrate-overlay";
+  overlay.id = "celebrate-overlay";
+
+  const toast = document.createElement("div");
+  toast.className = "celebrate-toast";
+  toast.innerHTML = `
+    <span class="celebrate-emoji">${msg.emoji}</span>
+    <div class="celebrate-title">${msg.title}</div>
+    <div class="celebrate-days">${daysText}</div>
+    <div class="celebrate-msg"><span class="celebrate-name">${ownerName}</span> completed <em>${taskName}</em> ahead of schedule. ${msg.msg}</div>
+    <button class="celebrate-close" onclick="dismissCelebration()">Keep it up 👊</button>
+  `;
+
+  overlay.appendChild(toast);
+  document.body.appendChild(overlay);
+
+  // Auto-dismiss after 8 seconds
+  setTimeout(() => dismissCelebration(), 8000);
+}
+
+function dismissCelebration() {
+  const overlay = document.getElementById("celebrate-overlay");
+  if (!overlay) return;
+  overlay.style.animation = "fadeIn 0.2s ease reverse forwards";
+  const toast = overlay.querySelector(".celebrate-toast");
+  if (toast) toast.style.animation = "celebrateOut 0.25s ease forwards";
+  setTimeout(() => overlay.remove(), 250);
+}
+
+function dismissOnboard(name) {
+  if (!state.seenOnboard) state.seenOnboard = {};
+  state.seenOnboard[name] = true;
+  save(); renderMember();
+}
+function doUndo() {
+  const item = undoStack.pop();
+  if (!item) return;
+  const existing = document.getElementById("undo-toast");
+  if (existing) existing.remove();
+  if (toastTimer) clearTimeout(toastTimer);
+  if (item.type === "project") {
+    state.projects.splice(item.data.index, 0, item.data.project);
+    save(); renderAdmin();
+  } else if (item.type === "task") {
+    const p = state.projects.find(x => x.id === item.data.pid);
+    if (p) { p.tasks.splice(item.data.index, 0, item.data.task); save(); renderAdmin(); }
+  }
+}
+
+
+async function loadState(){
+  document.getElementById("app").innerHTML='<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0A1628;gap:16px"><div style="font-family:monospace;font-size:13px;color:rgba(255,255,255,0.5)">SOGELINK · FP&A NINJAS</div><div style="font-size:18px;font-weight:300;color:#fff">Loading...</div></div>';
+  try{
+    const resp=await fetch(CF_WORKER_URL,{
+      method:"GET",
+      headers:{"X-API-Key":CF_API_KEY,"Content-Type":"application/json"},
+      mode:"cors"
+    });
+    if(resp.ok){const t=await resp.text();if(t&&t!=="null"&&t.trim()!=="null"){state=JSON.parse(t);}else{const s=localStorage.getItem("sogelink_fpa_live");state=s?JSON.parse(s):JSON.parse(JSON.stringify(DEF));}}
+    else{throw new Error("Status: "+resp.status);}
+  }catch(e){
+    console.warn("Cloud load failed:",e);
+    try{const s=localStorage.getItem("sogelink_fpa_live");state=s?JSON.parse(s):JSON.parse(JSON.stringify(DEF));}
+    catch(e2){state=JSON.parse(JSON.stringify(DEF));}
+  }
+  if(!state.workflows)state.workflows=JSON.parse(JSON.stringify(DEF.workflows||[]));
+  if(!state.activeTab)state.activeTab={};
+  if(!state.mainTab)state.mainTab="dashboard";
+  const sIds=new Set(state.projects.map(p=>p.id));
+  JSON.parse(JSON.stringify(DEF)).projects.filter(p=>!sIds.has(p.id)).forEach(p=>state.projects.push(p));
+  const wIds=new Set(state.workflows.map(w=>w.id));
+  JSON.parse(JSON.stringify(DEF.workflows||[])).filter(w=>!wIds.has(w.id)).forEach(w=>state.workflows.push(w));
+  state.projects.forEach(p=>{if(!p.comments)p.comments=[];if(p.estEnabled===undefined)p.estEnabled=true;p.tasks.forEach(t=>{if(!t.geo)t.geo="Group";if(!t.originalDue)t.originalDue=t.due||"";if(!t.dueHistory)t.dueHistory=[];if(t.actualDate===undefined)t.actualDate="";if(!t.subtasks)t.subtasks=[];if(!t.taskNotes)t.taskNotes=[];if(t.translatedName===undefined)t.translatedName=null;});});
+  state.workflows.forEach(w=>{if(!w.template)w.template=[];if(!w.cycles)w.cycles=[];if(!w.history)w.history=[];w.template.forEach(t=>{if(!t.geo)t.geo="Group";});w.cycles.forEach(c=>{(c.tasks||[]).forEach(t=>{if(!t.geo)t.geo="Group";if(!t.subtasks)t.subtasks=[];if(!t.taskNotes)t.taskNotes=[];});});});
+
+}
+
+const CF_WORKER_URL="https://fpa-ninjas-tracker.michael-white-87d.workers.dev";const CF_API_KEY="FPANinjas2026!";let _saveTimer=null;
+function save(){
+  try{localStorage.setItem("sogelink_fpa_live",JSON.stringify(state));}catch(e){}
+  if(_saveTimer)clearTimeout(_saveTimer);
+  _saveTimer=setTimeout(async()=>{
+    const dot=document.getElementById("sync-dot");const lbl=document.getElementById("sync-label");
+    try{
+      if(dot)dot.style.background="#EF9F27";if(lbl)lbl.textContent="Saving...";
+      const r=await fetch(CF_WORKER_URL,{method:"PUT",headers:{"Content-Type":"application/json","X-API-Key":CF_API_KEY},mode:"cors",body:JSON.stringify(state)});
+      if(dot)dot.style.background=r.ok?"#1D9E75":"#E24B4A";if(lbl)lbl.textContent=r.ok?"Synced ☁️":"Save failed";
+    }catch(e){if(dot)dot.style.background="#E24B4A";if(lbl)lbl.textContent="Offline";console.warn("Save error:",e);}
+  },1000);
+}
+function allOwners(){const s=new Set();state.projects.forEach(p=>{s.add(p.owner);p.tasks.forEach(t=>s.add(t.owner));});return[...s].filter(Boolean).sort();}
+function gStats(){
+  const at=state.projects.flatMap(p=>p.tasks);
+  const completed=at.filter(t=>t.actualDate);
+  return{
+    projects:state.projects.length,tasks:at.length,
+    blocked:at.filter(t=>t.status==="Blocked").length,
+    overdue:at.filter(t=>{if(!t.due||t.status==="Complete")return false;return new Date(t.due+"T00:00:00")<today;}).length,
+    done:state.projects.filter(p=>pct(p.tasks)===100).length,
+    anyEst:state.projects.some(p=>p.estEnabled),
+    estHrs:Math.round(at.reduce((a,t)=>a+(t.estHrs||0),0)*10)/10,
+    logHrs:Math.round(at.reduce((a,t)=>a+(t.loggedHrs||0),0)*10)/10,
+    onTime:completed.filter(t=>onTimeStatus(t)!=='late').length,
+    late:completed.filter(t=>onTimeStatus(t)==='late').length
+  };
+}
+
+function render(){
+  if(!state){document.getElementById("app").innerHTML="<div class='empty'>Loading...</div>";return;}
+  if(!currentUser){renderLogin();return;}
+  currentUser.role==="member"?renderMember():renderAdmin();
+}
+
+function renderLogin(){
+  document.getElementById("app").innerHTML=`
+  <div class="login-wrap">
+    <div class="login-brand">
+      <img src="data:image/png;base64,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" style="width:52px;height:52px;object-fit:contain;margin:0 auto 14px;display:block" alt="Sogelink" />
+      <div class="login-company">Sogelink</div>
+      <div class="login-team">FP&A Ninjas</div>
+    </div>
+    <div class="login-card">
+      <div class="login-title">Sign in to your workspace</div>
+      <p class="login-sub">Select your name to view your assigned tasks and update progress.</p>
+      <div class="field"><label>Team member</label>
+        <select id="lSel">
+          <option value="">Choose your name...</option>
+          ${allOwners().map(o=>`<option>${o}</option>`).join("")}
+          <option value="__new__">+ New team member</option>
+        </select>
+      </div>
+      <div class="field" id="newWrap" style="display:none"><label>Your name</label><input type="text" id="newName" placeholder="Full name" /></div>
+      <div class="login-actions">
+        <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="doLogin()">Sign in</button>
+        <button class="btn" onclick="doAdmin()">Admin</button>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById("lSel").addEventListener("change",function(){document.getElementById("newWrap").style.display=this.value==="__new__"?"block":"none";});
+}
+function doLogin(){let v=document.getElementById("lSel").value;if(v==="__new__")v=document.getElementById("newName").value.trim();if(!v)return;currentUser={name:v,role:"member"};render();}
+function doAdmin(){currentUser={name:"Admin",role:"admin"};render();}
+function logout(){currentUser=null;render();}
+
+
+
+
+// ── Workflow helpers ──────────────────────────────────────────────────────────
+function cadenceBadge(c){return{monthly:"c-monthly",weekly:"c-weekly",quarterly:"c-quarterly","ad hoc":"c-adhoc"}[c]||"c-adhoc";}
+function cadenceLabel(c){return{monthly:"Monthly",weekly:"Weekly",quarterly:"Quarterly","ad hoc":"Ad hoc"}[c]||c;}
+
+function calcDueDate(anchorDate, relDay) {
+  if(!anchorDate) return "";
+  const d = new Date(anchorDate + "T00:00:00");
+  d.setDate(d.getDate() + relDay - 1);
+  return d.toISOString().slice(0,10);
+}
+
+function activeCycle(w) {
+  return w.cycles && w.cycles.length ? w.cycles[w.cycles.length-1] : null;
+}
+
+function cyclePct(cycle) {
+  if(!cycle||!cycle.tasks||!cycle.tasks.length) return 0;
+  return Math.round(cycle.tasks.filter(t=>t.status==="Complete").length/cycle.tasks.length*100);
+}
+
+function renderWorkflowsView() {
+  if(!state.workflows||!state.workflows.length) return `<div class="empty">No workflows yet. Create one with + New workflow.</div>`;
+  return state.workflows.map(w => renderWorkflow(w)).join("");
+}
+
+function renderWorkflow(w) {
+  const ac = activeCycle(w);
+  const pp = cyclePct(ac);
+  const wfTab = state.activeTab["wf_"+w.id] || "cycle";
+  return `<div class="wf-card">
+    <div class="wf-header" onclick="toggleWf(${w.id})">
+      <span class="chevron ${w.expanded?'open':''}">&#9654;</span>
+      <span class="wf-name">${w.name}</span>
+      <span class="cadence-badge ${cadenceBadge(w.cadence)}">${cadenceLabel(w.cadence)}</span>
+      ${ac?`<span style="font-size:12px;color:var(--text-2)">Cycle: ${fdShort(ac.start)} → ${fdShort(ac.anchor)}</span>`:'<span style="font-size:12px;color:var(--text-3)">No active cycle</span>'}
+      ${ac?`<div class="cycle-prog-wrap"><div class="cycle-prog-bar ${pp===100?'done':''}" style="width:${pp}%"></div></div><span style="font-size:12px;color:var(--text-2)">${pp}%</span>`:''}
+      <button class="btn btn-sm btn-primary" style="margin-left:4px" onclick="event.stopPropagation();openStartCycle(${w.id})">&#9654; New cycle</button>
+      <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteWf(${w.id})">Delete</button>
+    </div>
+    ${w.expanded?`
+    <div class="tabs">
+      <div class="tab ${wfTab==='cycle'?'active':''}" onclick="setTab('wf_${w.id}','cycle')">Active cycle${ac?` (${ac.tasks.filter(t=>t.status==='Complete').length}/${ac.tasks.length})`:''}
+      </div>
+      <div class="tab ${wfTab==='template'?'active':''}" onclick="setTab('wf_${w.id}','template')">Template (${w.template.length} tasks)</div>
+      <div class="tab ${wfTab==='history'?'active':''}" onclick="setTab('wf_${w.id}','history')">Cycle history (${w.history.length})</div>
+    </div>
+    ${wfTab==='cycle'?renderActiveCycle(w,ac)
+      :wfTab==='template'?renderTemplate(w)
+      :renderHistory(w)}
+    `:''}
+  </div>`;
+}
+
+function renderActiveCycle(w, ac) {
+  if(!ac) return `<div class="empty" style="padding:28px">
+    No active cycle. Hit <strong>New cycle</strong> to start one.<br>
+    <span style="font-size:12px;color:var(--text-3);margin-top:4px;display:block">Tasks will be auto-created from the template with due dates calculated from your anchor date.</span>
+  </div>`;
+  const rows = ac.tasks.map(t=>`<tr>
+    <td style="width:24%">${t.name}</td>
+    <td style="width:11%"><span class="chip">${av(t.owner,20)} ${t.owner}</span></td>
+    <td style="width:10%"><span class="${dc(t.due,t.status)}">${fdShort(t.due)}</span></td>
+    <td style="width:9%"><span class="rel-day">Day ${t.relDay>0?'+':''}${t.relDay}</span></td>
+    <td style="width:14%"><select class="mini-sel" onchange="updCycleStatus(${w.id},${t.id},this.value)">${["Not started","In progress","Review","Complete","Blocked"].map(s=>`<option ${t.status===s?"selected":""}>${s}</option>`).join("")}</select></td>
+    <td style="width:8%"><span class="prio-dot ${pcls(t.priority)}"></span>${t.priority}</td>
+    <td style="width:8%;text-align:right"><span class="time-chip">${fh(t.estHrs)}</span></td>
+    <td style="width:16%;font-size:12px;color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.notes||"—"}</td>
+  </tr>`).join("");
+
+  const allDone = ac.tasks.every(t=>t.status==="Complete");
+  return `
+  <div class="cycle-banner">
+    <span class="cycle-label">Anchor date</span><span class="cycle-val">${fdShort(ac.anchor)} (${w.anchorLabel})</span>
+    <span class="cycle-label" style="margin-left:12px">Started</span><span class="cycle-val">${fdShort(ac.start)}</span>
+    <span class="cycle-label" style="margin-left:12px">Tasks complete</span><span class="cycle-val">${ac.tasks.filter(t=>t.status==="Complete").length} / ${ac.tasks.length}</span>
+    ${allDone?`<button class="btn btn-success btn-sm" onclick="closeCycle(${w.id})">Close cycle ✓</button>`:""}
+  </div>
+  <table><thead><tr>
+    <th style="width:22%">Task</th><th style="width:10%">Owner</th><th style="width:6%">Geo</th><th style="width:9%">Due date</th><th style="width:8%">Rel. day</th>
+    <th style="width:12%">Status</th><th style="width:7%">Priority</th><th style="width:7%;text-align:right">Est</th><th style="width:19%">Notes</th>
+  </tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function renderTemplate(w) {
+  const rows = w.template.map(t=>`<tr>
+    <td style="width:24%">${t.name}</td>
+    <td style="width:11%"><span class="chip">${av(t.owner,20)} ${t.owner}</span></td>
+    <td style="width:7%">${geoBadge(t.geo)}</td>
+    <td style="width:10%"><span class="rel-day">${t.relDay===0?"Anchor day":t.relDay>0?`Day +${t.relDay}`:`Day ${t.relDay}`}</span></td>
+    <td style="width:9%"><span class="prio-dot ${pcls(t.priority)}"></span>${t.priority}</td>
+    <td style="width:7%;text-align:right"><span class="time-chip">${fh(t.estHrs)}</span></td>
+    <td style="width:16%;font-size:12px;color:var(--text-2)">${t.notes||"—"}</td>
+    <td style="width:12%;text-align:right">
+      <button class="btn btn-danger btn-sm" onclick="delTmplTask(${w.id},${t.id})">×</button>
+    </td>
+  </tr>`).join("");
+  return `<table><thead><tr>
+    <th style="width:24%">Task</th><th style="width:11%">Default owner</th><th style="width:7%">Geo</th><th style="width:10%">Relative day</th>
+    <th style="width:9%">Priority</th><th style="width:7%;text-align:right">Est hrs</th><th style="width:16%">Notes</th><th style="width:16%"></th>
+  </tr></thead><tbody>
+  ${rows}
+  <tr class="add-row">
+    <td><input type="text" id="tt_n_${w.id}" placeholder="Task name..." /></td>
+    <td><select id="tt_o_${w.id}">${allOwners().map(o=>`<option>${o}</option>`).join("")}</select></td>
+    <td><select id="tt_g_${w.id}">${GEOS.map(g=>`<option>${g}</option>`).join("")}</select></td>
+    <td><input type="number" id="tt_d_${w.id}" placeholder="e.g. 3 or -2" style="width:80px" /></td>
+    <td><select id="tt_p_${w.id}"><option>High</option><option selected>Medium</option><option>Low</option></select></td>
+    <td><input type="number" id="tt_e_${w.id}" placeholder="Hrs" min="0" step="0.5" /></td>
+    <td colspan="2"><button class="btn btn-sm btn-primary" onclick="addTmplTask(${w.id})">+ Add to template</button></td>
+  </tr>
+  </tbody></table>
+  <div style="padding:12px 18px;font-size:12px;color:var(--text-3)">
+    Relative days are calculated from the anchor date. Use negative numbers to set tasks before the anchor (e.g. Day -2 = 2 days before the board meeting).
+  </div>`;
+}
+
+function renderHistory(w) {
+  if(!w.history||!w.history.length) return `<div class="empty">No completed cycles yet.</div>`;
+  return `<div style="padding:8px 0">${w.history.slice().reverse().map(h=>{
+    const late=h.tasks?h.tasks.filter(t=>t.status!=="Complete").length:0;
+    const total=h.tasks?h.tasks.length:0;
+    const done=total-late;
+    const cls=late===0?"hs-ok":late<total/2?"hs-partial":"hs-late";
+    return `<div class="history-row">
+      <span class="hist-name">${h.label||"Cycle"}</span>
+      <span style="font-size:12px;color:var(--text-2)">${fdShort(h.start)} → ${fdShort(h.closed)}</span>
+      <span class="hist-stat ${cls}">${done}/${total} complete</span>
+      ${late>0?`<span style="font-size:11px;color:var(--amber)">${late} incomplete</span>`:""}
+    </div>`;
+  }).join("")}</div>`;
+}
+
+// ── Workflow actions ──────────────────────────────────────────────────────────
+function toggleWf(wid){const w=state.workflows.find(x=>x.id===wid);if(w)w.expanded=!w.expanded;save();renderAdmin();}
+
+function updCycleStatus(wid,tid,val){
+  const w=state.workflows.find(x=>x.id===wid);if(!w)return;
+  const ac=activeCycle(w);if(!ac)return;
+  const t=ac.tasks.find(x=>x.id===tid);if(!t)return;
+  const wasComplete=t.status==='Complete';
+  t.status=val;
+  if(val==="Complete"&&!t.actualDate){
+    t.actualDate=new Date().toISOString().slice(0,10);
+    if(!wasComplete && t.due){
+      const target=new Date(t.due+'T00:00:00');
+      const actual=new Date(t.actualDate+'T00:00:00');
+      const daysEarly=Math.round((target-actual)/86400000);
+      if(daysEarly>0){
+        setTimeout(()=>showCelebration(t.name,t.owner||currentUser.name,daysEarly),400);
+      }
+    }
+  }
+  if(val!=="Complete")t.actualDate="";
+  save();renderAdmin();
+}
+
+function closeCycle(wid){
+  const w=state.workflows.find(x=>x.id===wid);if(!w)return;
+  const ac=activeCycle(w);if(!ac)return;
+  ac.closed=new Date().toISOString().slice(0,10);
+  ac.label=ac.label||`${w.cadence==="monthly"?"Month":"Cycle"} ending ${fdShort(ac.anchor)}`;
+  w.history.push({...ac});
+  w.cycles=w.cycles.filter(c=>c.id!==ac.id);
+  save();renderAdmin();
+  showToast(`Cycle "${ac.label}" closed and archived.`);
+}
+
+function openStartCycle(wid){
+  const w=state.workflows.find(x=>x.id===wid);if(!w)return;
+  modalHtml=`<div class="modal-overlay" onclick="if(event.target===this){modalHtml=null;renderAdmin()}">
+    <div class="modal">
+      <div class="modal-title">Start new cycle — ${w.name}</div>
+      <p style="font-size:13px;color:var(--text-2);margin-bottom:16px">${w.template.length} tasks will be created automatically with due dates calculated from your anchor date.</p>
+      <div class="form-row">
+        <div class="fg"><label>${w.anchorLabel}</label><input type="date" id="sc_anchor" /></div>
+        <div class="fg"><label>Cycle label (optional)</label><input type="text" id="sc_label" placeholder="e.g. May 2026 close" /></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="modalHtml=null;renderAdmin()">Cancel</button>
+        <button class="btn btn-primary" onclick="startCycle(${wid})">Start cycle</button>
+      </div>
+    </div>
+  </div>`;
+  renderAdmin();
+}
+
+function startCycle(wid){
+  const w=state.workflows.find(x=>x.id===wid);if(!w)return;
+  const anchor=document.getElementById("sc_anchor")?.value;if(!anchor)return;
+  const label=document.getElementById("sc_label")?.value.trim();
+  const cycleId=Date.now();
+  const tasks=w.template.map((t,i)=>({
+    ...JSON.parse(JSON.stringify(t)),
+    id:cycleId+i,
+    due:calcDueDate(anchor,t.relDay),
+    status:"Not started",actualDate:"",loggedHrs:0,
+    geo:t.geo||"Group"
+  }));
+  if(!w.cycles)w.cycles=[];
+  w.cycles.push({id:cycleId,anchor,start:new Date().toISOString().slice(0,10),label:label||"",tasks});
+  w.expanded=true;
+  state.activeTab["wf_"+wid]="cycle";
+  modalHtml=null;save();renderAdmin();
+  showToast(`Cycle started — ${tasks.length} tasks created.`);
+}
+
+function addTmplTask(wid){
+  const n=document.getElementById("tt_n_"+wid)?.value.trim();if(!n)return;
+  const w=state.workflows.find(x=>x.id===wid);if(!w)return;
+  const maxId=w.template.reduce((m,t)=>Math.max(m,t.id),0);
+  const ttGeoEl=document.getElementById("tt_g_"+wid);
+  w.template.push({id:maxId+1,name:n,owner:document.getElementById("tt_o_"+wid).value,relDay:parseInt(document.getElementById("tt_d_"+wid).value)||1,priority:document.getElementById("tt_p_"+wid).value,geo:ttGeoEl?ttGeoEl.value:"Group",estHrs:parseFloat(document.getElementById("tt_e_"+wid).value)||0,notes:""});
+  document.getElementById("tt_n_"+wid).value="";
+  save();renderAdmin();
+}
+
+function delTmplTask(wid,tid){
+  const w=state.workflows.find(x=>x.id===wid);if(!w)return;
+  w.template=w.template.filter(x=>x.id!==tid);save();renderAdmin();
+}
+
+function deleteWf(wid){
+  if(!confirm("Delete this workflow and all its cycle history?"))return;
+  state.workflows=state.workflows.filter(x=>x.id!==wid);save();renderAdmin();
+}
+
+function openAddWorkflow(){
+  modalHtml=`<div class="modal-overlay" onclick="if(event.target===this){modalHtml=null;renderAdmin()}">
+    <div class="modal">
+      <div class="modal-title">New workflow</div>
+      <div class="form-row">
+        <div class="fg" style="flex:2"><label>Workflow name</label><input type="text" id="wf_n" placeholder="e.g. Weekly KPI pack" /></div>
+        <div class="fg"><label>Cadence</label><select id="wf_c"><option value="monthly">Monthly</option><option value="weekly">Weekly</option><option value="quarterly">Quarterly</option><option value="ad hoc">Ad hoc</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Anchor date label</label><input type="text" id="wf_al" placeholder="e.g. Board meeting date" /></div>
+        <div class="fg"><label>Description</label><input type="text" id="wf_d" placeholder="Brief description..." /></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="modalHtml=null;renderAdmin()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitWorkflow()">Create workflow</button>
+      </div>
+    </div>
+  </div>`;
+  renderAdmin();
+}
+
+function submitWorkflow(){
+  const n=document.getElementById("wf_n")?.value.trim();if(!n)return;
+  if(!state.workflows)state.workflows=[];
+  const maxId=state.workflows.reduce((m,w)=>Math.max(m,w.id),0);
+  state.workflows.push({id:maxId+1,name:n,cadence:document.getElementById("wf_c").value,anchorLabel:document.getElementById("wf_al").value.trim()||"Anchor date",desc:document.getElementById("wf_d").value.trim(),expanded:true,template:[],cycles:[],history:[]});
+  modalHtml=null;save();
+  state.mainTab="workflows";
+  renderAdmin();
+}
+
+// ── Member view: show workflow tasks ─────────────────────────────────────────
+function myWorkflowTasks(name){
+  return (state.workflows||[]).flatMap(w=>{
+    const ac=activeCycle(w);if(!ac)return[];
+    return ac.tasks.filter(t=>t.owner===name||taskVisibleTo(t,name)).map(t=>({...t,pName:w.name+"  (workflow)",pid:null,wfId:w.id,isWf:true}));
+  });
+}
+
+// ── Assignment helpers ────────────────────────────────────────────────────────
+const FULL_GROUP = "__group__";
+
+function getSubgroups() {
+  if (!state.subgroups) state.subgroups = [
+    { id: 1, name: "Planful Team", members: [] },
+    { id: 2, name: "Reporting Squad", members: [] }
+  ];
+  return state.subgroups;
+}
+
+function resolveAssignees(t) {
+  // Returns array of member names who should see this task
+  if (t.assignMode === "group") return allOwners();
+  if (t.assignMode === "subgroup" && t.subgroupId) {
+    const sg = getSubgroups().find(s => s.id === t.subgroupId);
+    return sg ? sg.members : [];
+  }
+  return [t.owner].filter(Boolean);
+}
+
+function taskVisibleTo(t, name) {
+  const assignees = resolveAssignees(t);
+  if (assignees.includes(name)) return true;
+  if (t.watchers && t.watchers.includes(name)) return true;
+  return false;
+}
+
+function assignModeLabel(t) {
+  if (t.assignMode === "group") return `<span class="assignment-pill ap-group">&#128101; All FP&amp;A Ninjas</span>`;
+  if (t.assignMode === "subgroup") {
+    const sg = getSubgroups().find(s => s.id === t.subgroupId);
+    return `<span class="assignment-pill ap-subgroup">&#128101; ${sg ? sg.name : "Sub-group"}</span>`;
+  }
+  return `<span class="assignment-pill ap-individual">&#128100; ${t.owner||"Unassigned"}</span>`;
+}
+
+function watcherChips(t) {
+  if (!t.watchers || !t.watchers.length) return "";
+  return `<div class="watcher-row">${t.watchers.map(w=>`<span class="watcher-chip">${av(w,16)} ${w}</span>`).join("")}</div>`;
+}
+
+// ── Subgroup management ───────────────────────────────────────────────────────
+function openManageTeams() {
+  const sgs = getSubgroups();
+  const owners = allOwners();
+  modalHtml = `<div class="modal-overlay" onclick="if(event.target===this){modalHtml=null;renderAdmin()}">
+    <div class="modal" style="width:560px">
+      <div class="modal-title">Manage sub-groups</div>
+      <p style="font-size:13px;color:var(--text-2);margin-bottom:16px">Create named teams to assign tasks to a specific subset of FP&amp;A Ninjas.</p>
+      ${sgs.map(sg=>`
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:10px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span style="font-weight:500;font-size:13px">${sg.name}</span>
+            <button class="btn btn-danger btn-sm" onclick="deleteSG(${sg.id})">Delete</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">
+            ${owners.map(o=>`<label style="display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:3px 10px">
+              <input type="checkbox" ${sg.members.includes(o)?"checked":""} onchange="toggleSGMember(${sg.id},'${o}',this.checked)" style="width:12px;height:12px" />
+              ${av(o,18)} ${o}
+            </label>`).join("")}
+          </div>
+        </div>`).join("")}
+      <div style="display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+        <input type="text" id="sg_new_name" placeholder="New sub-group name..." style="flex:1;font-family:var(--font);font-size:13px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text)" />
+        <button class="btn btn-primary btn-sm" onclick="addSG()">+ Add group</button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="modalHtml=null;save();renderAdmin()">Done</button>
+      </div>
+    </div>
+  </div>`;
+  renderAdmin();
+}
+
+function addSG() {
+  const n = document.getElementById("sg_new_name")?.value.trim(); if(!n) return;
+  if (!state.subgroups) state.subgroups = [];
+  const maxId = state.subgroups.reduce((m,s)=>Math.max(m,s.id),0);
+  state.subgroups.push({ id: maxId+1, name: n, members: [] });
+  save(); openManageTeams();
+}
+function deleteSG(id) {
+  if (!state.subgroups) return;
+  state.subgroups = state.subgroups.filter(s=>s.id!==id);
+  save(); openManageTeams();
+}
+function toggleSGMember(sgId, member, checked) {
+  const sg = getSubgroups().find(s=>s.id===sgId); if(!sg) return;
+  if (checked && !sg.members.includes(member)) sg.members.push(member);
+  if (!checked) sg.members = sg.members.filter(m=>m!==member);
+  save();
+}
+
+// ── Task assignment modal ─────────────────────────────────────────────────────
+function openAssignTask(pid, tid) {
+  const p = state.projects.find(x=>x.id===pid);
+  const t = p && p.tasks.find(x=>x.id===tid);
+  if (!t) return;
+  const sgs = getSubgroups();
+  const owners = allOwners();
+  const mode = t.assignMode || "individual";
+  modalHtml = `<div class="modal-overlay" onclick="if(event.target===this){modalHtml=null;renderAdmin()}">
+    <div class="modal">
+      <div class="modal-title">Assign task — ${t.name}</div>
+      <div class="form-row">
+        <div class="fg" style="flex:1">
+          <label>Assignment mode</label>
+          <select id="at_mode" onchange="refreshAssignModal(${pid},${tid})" class="assign-mode-sel" style="width:100%">
+            <option value="individual" ${mode==="individual"?"selected":""}>Individual — one owner</option>
+            <option value="group" ${mode==="group"?"selected":""}>Group — all FP&amp;A Ninjas</option>
+            <option value="subgroup" ${mode==="subgroup"?"selected":""}>Sub-group — named team</option>
+          </select>
+        </div>
+      </div>
+      <div id="at_individual_wrap" style="${mode!=="individual"?"display:none":""}">
+        <div class="fg"><label>Owner</label>
+          <select id="at_owner" style="width:100%;font-family:var(--font);font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text)">
+            ${owners.map(o=>`<option ${t.owner===o?"selected":""}>${o}</option>`).join("")}
+          </select>
+        </div>
+      </div>
+      <div id="at_subgroup_wrap" style="${mode!=="subgroup"?"display:none":""}">
+        <div class="fg"><label>Sub-group</label>
+          <select id="at_subgroup" style="width:100%;font-family:var(--font);font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text)">
+            ${sgs.map(sg=>`<option value="${sg.id}" ${t.subgroupId===sg.id?"selected":""}>${sg.name} (${sg.members.length} members)</option>`).join("")}
+          </select>
+        </div>
+      </div>
+      ${mode==="group"?`<p style="font-size:12px;color:var(--text-2);margin-top:4px">This task will appear in all ${owners.length} team members' My Tasks view.</p>`:""}
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
+        <div class="fg"><label>Watchers (also visible to)</label>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+            ${owners.map(o=>`<label style="display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer;background:var(--bg);border:1px solid var(--border);border-radius:99px;padding:3px 10px">
+              <input type="checkbox" ${(t.watchers||[]).includes(o)?"checked":""} data-watcher="${o}" style="width:12px;height:12px" />
+              ${av(o,18)} ${o}
+            </label>`).join("")}
+          </div>
+          <p style="font-size:11px;color:var(--text-3);margin-top:6px">Watchers can see the task but aren't the owner.</p>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="modalHtml=null;renderAdmin()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveAssignment(${pid},${tid})">Save assignment</button>
+      </div>
+    </div>
+  </div>`;
+  renderAdmin();
+}
+
+function refreshAssignModal(pid, tid) {
+  const mode = document.getElementById("at_mode")?.value;
+  document.getElementById("at_individual_wrap").style.display = mode==="individual"?"":"none";
+  document.getElementById("at_subgroup_wrap").style.display = mode==="subgroup"?"":"none";
+}
+
+function saveAssignment(pid, tid) {
+  const p = state.projects.find(x=>x.id===pid);
+  const t = p && p.tasks.find(x=>x.id===tid);
+  if (!t) return;
+  const mode = document.getElementById("at_mode").value;
+  t.assignMode = mode;
+  if (mode === "individual") t.owner = document.getElementById("at_owner").value;
+  if (mode === "subgroup") t.subgroupId = parseInt(document.getElementById("at_subgroup").value);
+  if (mode === "group") { t.owner = "All FP&A Ninjas"; }
+  // Save watchers
+  const watcherBoxes = document.querySelectorAll("[data-watcher]");
+  t.watchers = [...watcherBoxes].filter(b=>b.checked).map(b=>b.dataset.watcher);
+  modalHtml = null; save(); renderAdmin();
+}
+
+function memberProjectsList() {
+  return state.projects.map(p => {
+    const pp = pct(p.tasks);
+    const expanded = state.memberProjExpanded && state.memberProjExpanded[p.id];
+    return `<div class="card" style="margin-bottom:10px">
+      <div class="proj-header ${p.type==='Process improvement'?'process':'reporting'}" onclick="toggleMemberProj(${p.id})">
+        <span class="chevron ${expanded?'open':''}">&#9654;</span>
+        <span class="proj-name">${p.name}</span>
+        <span class="tag ${p.type==='Process improvement'?'tag-process':'tag-reporting'}">${p.type}</span>
+        <span class="chip">${av(p.owner,20)} ${p.owner}</span>
+        ${p.due?`<span class="${dc(p.due,'')}" style="font-size:12px">Due ${fdShort(p.due)}</span>`:''}
+        <div class="prog-wrap"><div class="prog-bar ${pp===100?'done':''}" style="width:${pp}%"></div></div>
+        <span style="font-size:12px;color:var(--text-2)">${pp}%</span>
+      </div>
+      ${expanded?`
+      <table><thead><tr>
+        <th style="width:28%">Task</th><th style="width:14%">Owner</th>
+        <th style="width:12%">Target date</th><th style="width:11%">Status</th>
+        <th style="width:8%">Priority</th>${p.estEnabled?'<th style="width:8%;text-align:right">Est</th><th style="width:8%;text-align:right">Logged</th>':''}<th style="width:11%">Notes</th>
+      </tr></thead>
+      <tbody>
+        ${p.tasks.map(t=>`<tr>
+          <td>${t.name}</td>
+          <td><span class="chip">${av(t.owner,20)} ${t.owner}</span></td>
+          <td><span class="${dc(t.due,t.status)}">${fdShort(t.due)}</span></td>
+          <td><span class="badge ${scls(t.status)}">${t.status}</span></td>
+          <td><span class="prio-dot ${pcls(t.priority)}"></span>${t.priority}</td>
+          ${p.estEnabled?`<td style="text-align:right"><span class="time-chip">${fh(t.estHrs)}</span></td><td style="text-align:right"><span class="time-chip time-chip-log">${fh(t.loggedHrs)}</span></td>`:''}
+          <td style="font-size:12px;color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.notes||'—'}</td>
+        </tr>`).join('')}
+        <tr class="add-row">
+          <td><input type="text" id="mt_n_${p.id}" placeholder="New task name..." /></td>
+          <td><select id="mt_o_${p.id}">${allOwners().map(o=>`<option ${o===currentUser.name?'selected':''}>${o}</option>`).join('')}</select></td>
+          <td><input type="date" id="mt_d_${p.id}" /></td>
+          <td><select id="mt_s_${p.id}"><option>Not started</option><option>In progress</option><option>Blocked</option></select></td>
+          <td><select id="mt_p_${p.id}"><option>High</option><option selected>Medium</option><option>Low</option></select></td>
+          ${p.estEnabled?`<td><input type="number" id="mt_e_${p.id}" placeholder="Hrs" min="0" step="0.5" /></td>`:`<td></td>`}
+          <td></td>
+          <td style="text-align:right"><button class="btn btn-sm btn-primary" onclick="memberAddTask(${p.id})">+ Add task</button></td>
+        </tr>
+      </tbody></table>`:''}
+    </div>`;
+  }).join('');
+}
+
+function toggleMemberProj(pid) {
+  if (!state.memberProjExpanded) state.memberProjExpanded = {};
+  state.memberProjExpanded[pid] = !state.memberProjExpanded[pid];
+  renderMember();
+}
+
+function memberAddTask(pid) {
+  const n = document.getElementById("mt_n_"+pid)?.value.trim();
+  if (!n) return;
+  const p = state.projects.find(x=>x.id===pid);
+  if (!p) return;
+  const maxId = p.tasks.reduce((m,t)=>Math.max(m,t.id),0);
+  const newDue = document.getElementById("mt_d_"+pid).value;
+  p.tasks.push({
+    id: Math.max(maxId+1, state.nextTid++),
+    name: n,
+    owner: document.getElementById("mt_o_"+pid).value,
+    due: newDue, originalDue: newDue, dueHistory: [], actualDate: '',
+    status: document.getElementById("mt_s_"+pid).value,
+    priority: document.getElementById("mt_p_"+pid).value,
+    estHrs: parseFloat(document.getElementById("mt_e_"+pid).value)||0,
+    loggedHrs: 0, notes: '',
+    addedBy: currentUser.name
+  });
+  save();
+  renderMember();
+  showToast(`Task "${n}" added to ${p.name}`);
+}
+
+function renderMember(){
+  const projTasks=state.projects.flatMap(p=>p.tasks.filter(t=>taskVisibleTo(t,currentUser.name)).map(t=>({...t,pName:p.name,pid:p.id,isWf:false})));
+  const wfTasks=myWorkflowTasks(currentUser.name);
+  const mine=[...projTasks,...wfTasks];
+  const active=mine.filter(t=>t.status!=="Complete"&&t.status!=="Blocked").sort((a,b)=>new Date(a.due||"9999")-new Date(b.due||"9999"));
+  const blocked=mine.filter(t=>t.status==="Blocked");
+  const done=mine.filter(t=>t.status==="Complete");
+  const memberTab = state.memberTab || 'mytasks';
+  const isNewUser = !state.seenOnboard || !state.seenOnboard[currentUser.name];
+  document.getElementById("app").innerHTML=`
+  ${topbar()}
+  <div class="main">
+    <div class="page-header"><div class="page-title">My workspace</div></div>
+    ${isNewUser ? `<div class="onboard-banner">
+      <div class="onboard-icon">👋</div>
+      <div class="onboard-body">
+        <div class="onboard-title">Welcome to FP&A Ninjas, ${currentUser.name}!</div>
+        <div class="onboard-sub">Your tasks are shown below. Use <strong>My tasks</strong> to update status and log time, or <strong>Add to projects</strong> to contribute new tasks to existing projects.</div>
+      </div>
+      <button class="btn-topbar" onclick="dismissOnboard('${currentUser.name}')">Got it</button>
+    </div>` : ''}
+    <div class="summary-bar">
+      <div class="sc"><div class="sc-label">Assigned</div><div class="sc-val">${mine.length}</div></div>
+      <div class="sc"><div class="sc-label">In progress</div><div class="sc-val" style="color:var(--blue-2)">${mine.filter(t=>t.status==="In progress").length}</div></div>
+      <div class="sc"><div class="sc-label">Est. hours</div><div class="sc-val">${Math.round(mine.reduce((a,t)=>a+(t.estHrs||0),0)*10)/10}</div></div>
+      <div class="sc"><div class="sc-label">Logged hrs</div><div class="sc-val">${Math.round(mine.reduce((a,t)=>a+(t.loggedHrs||0),0)*10)/10}</div></div>
+      <div class="sc"><div class="sc-label">Complete</div><div class="sc-val" style="color:var(--green)">${done.length}</div></div>
+    </div>
+    <div class="tabs" style="margin-bottom:20px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:hidden">
+      <div class="tab ${memberTab==='mytasks'?'active':''}" onclick="state.memberTab='mytasks';renderMember()">My tasks</div>
+      <div class="tab ${memberTab==='projects'?'active':''}" onclick="state.memberTab='projects';renderMember()">Add to projects</div>
+    </div>
+    ${memberTab==='mytasks'?`
+      ${active.length?`<div class="section-head">Active &amp; upcoming</div>${active.map(mCard).join("")}`:''}
+      ${blocked.length?`<div class="section-head">Blocked</div>${blocked.map(mCard).join('')}`:''}
+      ${done.length?`<div class="section-head">Complete</div>${done.map(mCard).join('')}`:''}
+      ${!mine.length?`<div class="empty" style="margin-top:48px">No tasks assigned to you yet.</div>`:''}
+    `:memberProjectsList()}
+  </div>${modalHtml||""}`;
+}
+
+function mCard(t){
+  const dclass=dc(t.due,t.status);
+  const cls=t.status==="Blocked"?"blocked":t.status==="Complete"?"complete":"";
+  return`<div class="mt-card ${cls}">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:2px">
+      <div style="flex:1"><div class="mt-title">${t.name}${dclass==="due-over"&&t.status!=="Complete"?`<span class="overdue-flag">Overdue</span>`:""}</div><div class="mt-proj">${t.pName}</div></div>
+      <span class="badge ${scls(t.status)}">${t.status}</span>
+    </div>
+    <div style="margin-bottom:5px">${assignModeLabel(t)}${watcherChips(t)}</div>
+    <div class="mt-meta">
+      <span class="${dclass}">Due ${fdShort(t.due)}</span>
+      ${t.geo?geoBadge(t.geo):''}
+      ${t.estHrs?`<span class="time-chip">Est ${fh(t.estHrs)}</span>`:""}
+      ${t.loggedHrs?`<span class="time-chip time-chip-log">Logged ${fh(t.loggedHrs)}</span>`:""}
+      <span><span class="prio-dot ${pcls(t.priority)}"></span>${t.priority}</span>
+    </div>
+    <div class="mt-actions">
+      <select class="mini-sel" style="width:auto" onchange="t.isWf?updCycleStatus(${t.wfId||0},${t.id},this.value):updStatus(${t.pid},${t.id},this.value)">
+        ${["Not started","In progress","Review","Complete","Blocked"].map(s=>`<option ${t.status===s?"selected":""}>${s}</option>`).join("")}
+      </select>
+      <button class="btn btn-sm" onclick="openLog(${t.pid},${t.id})">Log time</button>
+      ${t.status!=="Complete"?`<button class="btn btn-sm btn-success" onclick="${t.isWf?`updCycleStatus(${t.wfId||0},${t.id},'Complete')`:`updStatus(${t.pid},${t.id},'Complete')`}">Mark complete</button>`:""}
+    </div>
+    ${t.notes?`<div class="mt-notes">${t.notes}</div>`:""}
+  </div>`;
+}
+
+function topbar(){
+  return`<div class="topbar">
+    <div class="topbar-brand">
+      <img src="data:image/png;base64,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" style="width:30px;height:30px;object-fit:contain;" alt="Sogelink" />
+      <div class="topbar-names"><div class="topbar-company">Sogelink</div><div class="topbar-team">FP&A Ninjas</div></div>
+    </div>
+    <div class="topbar-divider"></div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      ${currentUser.role==="admin"?`<button class="btn-topbar" onclick="currentUser={name:currentUser.name,role:'member'};render()">My tasks</button>`:`<button class="btn-topbar" onclick="currentUser={name:currentUser.name,role:'admin'};render()">Admin view</button>`}
+      <div class="topbar-user">${av(currentUser.name,28)}<span>${currentUser.name}</span></div>
+      <button class="btn-topbar" onclick="logout()">Sign out</button>
+      <div id="sync-indicator" style="display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.45);font-family:monospace"><span id="sync-dot" style="width:6px;height:6px;border-radius:50%;background:#1D9E75;display:inline-block"></span><span id="sync-label">Synced ☁️</span></div>
+    </div>
+  </div>`;
+}
+
+function renderAdmin(){
+  const search=(document.getElementById("aSearch")||{}).value||"";
+  const fSt=(document.getElementById("fSt")||{}).value||"";
+  const fTy=(document.getElementById("fTy")||{}).value||"";
+  const fOw=(document.getElementById("fOw")||{}).value||"";
+  const s=gStats();
+  let projs=[...state.projects];
+  if(fTy)projs=projs.filter(p=>p.type===fTy);
+  const fGeo=(document.getElementById("fGeo")||{}).value||"";
+  if(fOw)projs=projs.filter(p=>p.owner===fOw||p.tasks.some(t=>t.owner===fOw));
+  if(fGeo)projs=projs.filter(p=>p.tasks.some(t=>t.geo===fGeo));
+  if(search){const q=search.toLowerCase();projs=projs.filter(p=>p.name.toLowerCase().includes(q)||p.tasks.some(t=>t.name.toLowerCase().includes(q)||t.owner.toLowerCase().includes(q)));}
+
+  document.getElementById("app").innerHTML=`
+  ${topbar()}
+  <div class="main">
+    <div class="page-header">
+      <div class="page-title">FP&amp;A Ninjas</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-export" onclick="exportCSV()">Export CSV</button>
+        <button class="btn btn-export" style="background:var(--green);border-color:var(--green)" onclick="exportExcel()">Export Excel</button>
+        <button class="btn" onclick="openManageTeams()">&#128101; Manage teams</button>
+        ${state.mainTab==='workflows'?`<button class="btn btn-primary" onclick="openAddWorkflow()">+ New workflow</button>`:`<button class="btn btn-primary" onclick="openAddProj()">+ New project</button>`}
+      </div>
+    </div>
+    <div class="main-tabs">
+      <div class="main-tab ${state.mainTab==='dashboard'?'active':''}" onclick="state.mainTab='dashboard';save();renderAdmin()">Dashboard</div>
+      <div class="main-tab ${state.mainTab==='projects'?'active':''}" onclick="state.mainTab='projects';save();renderAdmin()">Projects (${state.projects.length})</div>
+      <div class="main-tab ${state.mainTab==='workflows'?'active':''}" onclick="state.mainTab='workflows';save();renderAdmin()">Workflows (${(state.workflows||[]).length})</div>
+    </div>
+    <div class="summary-bar">
+      <div class="sc"><div class="sc-label">Projects</div><div class="sc-val">${s.projects}</div></div>
+      <div class="sc"><div class="sc-label">Tasks</div><div class="sc-val">${s.tasks}</div></div>
+      <div class="sc"><div class="sc-label">Complete</div><div class="sc-val" style="color:var(--green)">${s.done}</div></div>
+      <div class="sc"><div class="sc-label">Blocked</div><div class="sc-val" style="color:var(--red)">${s.blocked}</div></div>
+      <div class="sc"><div class="sc-label">Overdue</div><div class="sc-val" style="color:var(--amber)">${s.overdue}</div></div>
+      ${s.anyEst?`<div class="sc"><div class="sc-label">Est. hrs</div><div class="sc-val">${s.estHrs}</div></div><div class="sc"><div class="sc-label">Logged</div><div class="sc-val">${s.logHrs}</div></div>`:''}
+      <div class="sc"><div class="sc-label">On time</div><div class="sc-val" style="color:var(--green)">${s.onTime}</div></div>
+      <div class="sc"><div class="sc-label">Late</div><div class="sc-val" style="color:var(--red)">${s.late}</div></div>
+    </div>
+    ${(state.mainTab!=='workflows'&&state.mainTab!=='dashboard')?`<div class="toolbar">
+      <input type="text" id="aSearch" placeholder="Search projects & tasks..." value="${search}" oninput="renderAdmin()" />
+      <select id="fSt" onchange="renderAdmin()"><option value="">All statuses</option>${["Not started","In progress","Review","Complete","Blocked"].map(x=>`<option ${fSt===x?"selected":""}>${x}</option>`).join("")}</select>
+      <select id="fTy" onchange="renderAdmin()"><option value="">All types</option><option ${fTy==="Process improvement"?"selected":""}>Process improvement</option><option ${fTy==="Reporting improvement"?"selected":""}>Reporting improvement</option></select>
+      <select id="fOw" onchange="renderAdmin()"><option value="">All owners</option>${allOwners().map(o=>`<option ${fOw===o?"selected":""}>${o}</option>`).join("")}</select>
+      <select id="fGeo" onchange="renderAdmin()"><option value="">All geos</option>${GEOS.map(g=>`<option ${(document.getElementById('fGeo')||{}).value===g?"selected":""}>${g}</option>`).join("")}</select>
+    </div>`:''}
+    ${state.mainTab==='dashboard'
+      ? renderDashboard()
+      : state.mainTab==='workflows'
+        ? renderWorkflowsView()
+        : (projs.length?projs.map(p=>renderProj(p,fSt)).join(""):`<div class="empty">No projects match your filters.</div>`)
+    }
+  </div>${modalHtml||""}`;
+}
+
+function renderProj(p,fSt){
+  const pp=pct(p.tasks);
+  const tab=state.activeTab[p.id]||"tasks";
+  let tasks=[...p.tasks];
+  if(fSt)tasks=tasks.filter(t=>t.status===fSt);
+  const totE=Math.round(p.tasks.reduce((a,t)=>a+(t.estHrs||0),0)*10)/10;
+  const totL=Math.round(p.tasks.reduce((a,t)=>a+(t.loggedHrs||0),0)*10)/10;
+  const typeClass=p.type==="Process improvement"?"process":"reporting";
+
+  const taskRows=tasks.map(t=>{
+    const expanded=isTaskExpanded(p.id,t.id);
+    const subs=t.subtasks||[];const subsDone=subs.filter(x=>x.done).length;
+    const subCount=subs.length?`<span style="font-size:10px;font-family:var(--mono);color:var(--text-3);margin-left:3px">${subsDone}/${subs.length}</span>`:'';
+    const expandBtn=`<button class="task-expand-btn" onclick="event.stopPropagation();toggleSubtaskPanel(${p.id},${t.id})">${expanded?'▲':'▼'}</button>`;
+    const slip=slippageDays(t);
+    const slipHtml=slip>0?`<div class="${slip>7?'slippage-bad':'slippage-warn'}">+${slip}d slippage</div>`:(slip<0?`<div style="font-size:11px;color:var(--green)">-${Math.abs(slip)}d</div>`:'');
+    const histHtml=(t.dueHistory&&t.dueHistory.length)?`<div class="date-history">${t.dueHistory.map(h=>`<div class="date-history-entry"><span class="date-original">${fdShort(h.from)}</span><span>→</span><span class="date-moved">${fdShort(h.to)}</span><span style="color:var(--text-3);font-size:10px">by ${h.by}</span></div>`).join('')}</div>`:'';
+    return `<tr>
+    <td style="width:18%">${t.name}</td>
+    <td style="width:9%">${assignModeLabel(t)}${watcherChips(t)}</td>
+    <td style="width:6%"><select class="mini-sel" style="width:100%;font-size:11px" onchange="updTaskGeo(${p.id},${t.id},this.value)">${['FR','NL','NO','Group'].map(g=>`<option ${(t.geo||'Group')===g?'selected':''}>${g}</option>`).join('')}</select></td>
+    <td style="width:9%" class="date-cell">
+      <input type="date" value="${t.due||''}" style="font-size:11px;padding:3px 5px;border:1px solid var(--border);border-radius:var(--radius-sm);background:transparent;color:var(--text);width:100%" onchange="updateTargetDate(${p.id},${t.id},this.value)" />
+      ${slipHtml}${histHtml}
+    </td>
+    <td style="width:9%">
+      <input type="date" value="${t.actualDate||''}" style="font-size:11px;padding:3px 5px;border:1px solid var(--border);border-radius:var(--radius-sm);background:transparent;color:var(--green);width:100%" onchange="updateActualDate(${p.id},${t.id},this.value)" />
+    </td>
+    <td style="width:8%">${onTimeBadge(t)}</td>
+    <td style="width:11%"><select class="mini-sel" onchange="updStatus(${p.id},${t.id},this.value)">${["Not started","In progress","Review","Complete","Blocked"].map(s=>`<option ${t.status===s?"selected":""}>${s}</option>`).join("")}</select></td>
+    <td style="width:7%"><span class="prio-dot ${pcls(t.priority)}"></span>${t.priority}</td>
+    ${p.estEnabled?`<td style="width:6%;text-align:right"><span class="time-chip">${fh(t.estHrs)}</span></td><td style="width:6%;text-align:right"><span class="time-chip time-chip-log">${fh(t.loggedHrs)}</span></td>`:''}
+    <td style="width:4%;text-align:right;white-space:nowrap"><button class="btn btn-sm" style="font-size:11px;padding:2px 7px;margin-bottom:2px" onclick="openAssignTask(${p.id},${t.id})">Assign</button> <button class="btn btn-danger" onclick="delTask(${p.id},${t.id})">×</button></td>
+  </tr>`;}).join("");
+
+  const stCards=(p.stakeholders||[]).map(s=>`<div class="stk-card">${av(s.name,30)}<div><div class="stk-name">${s.name}</div></div><span class="stk-role-badge ${stkCls(s.role)}">${s.role}</span><button class="btn btn-danger btn-sm" onclick="delSH(${p.id},${s.id})">×</button></div>`).join("");
+
+  const comments=(p.comments||[]).map(c=>`<div class="comment">${av(c.author,32)}<div class="comment-body"><div style="display:flex;justify-content:space-between;align-items:center"><span class="comment-author">${c.author}</span><span class="comment-time">${c.ts}</span></div><div class="comment-text">${c.text}</div></div></div>`).join("");
+
+  const ganttHtml=renderGantt(p);
+
+  return`<div class="card">
+    <div class="proj-header ${typeClass}" onclick="toggleProj(${p.id})">
+      <span class="chevron ${p.expanded?"open":""}">&#9654;</span>
+      <span class="proj-name">${p.name}</span>
+      <span class="tag ${p.type==="Process improvement"?"tag-process":"tag-reporting"}">${p.type}</span>
+      <span class="chip">${av(p.owner,20)} ${p.owner}</span>
+      ${p.due?`<span class="${dc(p.due,"")}" style="font-size:12px">Due ${fdShort(p.due)}</span>`:""}
+      <div class="prog-wrap"><div class="prog-bar ${pp===100?"done":""}" style="width:${pp}%"></div></div>
+      <span style="font-size:12px;color:var(--text-2);min-width:30px">${pp}%</span>
+      ${p.estEnabled && totE?`<span class="time-chip">${totE} hrs est</span>`:""}
+      ${p.estEnabled && totL?`<span class="time-chip time-chip-log">${totL} logged</span>`:""}
+      <button class="btn btn-danger btn-sm" style="margin-left:4px" onclick="event.stopPropagation();delProj(${p.id})">Delete</button>
+    </div>
+    ${p.expanded?`
+    <div class="tabs">
+      <div class="tab ${tab==="tasks"?"active":""}" onclick="setTab(${p.id},'tasks')">Tasks (${p.tasks.length})</div>
+      <div class="tab ${tab==="gantt"?"active":""}" onclick="setTab(${p.id},'gantt')">Timeline</div>
+      <div class="tab ${tab==="comments"?"active":""}" onclick="setTab(${p.id},'comments')">Comments (${(p.comments||[]).length})</div>
+      <div class="tab ${tab==="stk"?"active":""}" onclick="setTab(${p.id},'stk')">Stakeholders (${(p.stakeholders||[]).length})</div>
+    </div>
+    ${tab==="tasks"?`
+    <table><thead><tr>
+      <th style="width:${p.estEnabled?'16%':'19%'}">Task</th><th style="width:9%">Owner</th><th style="width:6%">Geo</th><th style="width:9%">Target date</th><th style="width:8%">Actual date</th><th style="width:7%">On time</th><th style="width:10%">Status</th><th style="width:6%">Priority</th>
+      ${p.estEnabled?'<th style="width:5%;text-align:right">Est</th><th style="width:5%;text-align:right">Logged</th>':''}
+      <th style="width:4%"></th>
+    </tr></thead><tbody>
+    ${taskRows}
+    <tr class="add-row">
+      <td><input type="text" id="nt_n_${p.id}" placeholder="Task name..." /></td>
+      <td><select id="nt_o_${p.id}">${allOwners().map(o=>`<option>${o}</option>`).join("")}</select></td>
+      <td><input type="date" id="nt_d_${p.id}" /></td>
+      <td></td><td></td>
+      <td><select id="nt_g_${p.id}" style="width:100%;font-size:11px;padding:3px 6px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:var(--font)"><option value="">Geo</option>${GEOS.map(g=>`<option>${g}</option>`).join('')}</select></td>
+      <td><select id="nt_s_${p.id}"><option>Not started</option><option>In progress</option><option>Review</option><option>Blocked</option></select></td>
+      <td><select id="nt_p_${p.id}"><option>High</option><option selected>Medium</option><option>Low</option></select></td>
+      ${p.estEnabled?`<td><input type="number" id="nt_e_${p.id}" placeholder="Hrs" min="0" step="0.5" /></td><td><input type="number" id="nt_l_${p.id}" placeholder="Logged" min="0" step="0.5" /></td>`:'<td></td><td></td>'}
+      <td style="text-align:right"><button class="btn btn-sm btn-primary" onclick="addTask(${p.id})">+ Add</button></td>
+    </tr>
+    </tbody></table>`
+    :tab==="gantt"?ganttHtml
+    :tab==="comments"?`
+    <div class="comments-section">
+      ${comments||`<div style="font-size:13px;color:var(--text-3);margin-bottom:12px">No comments yet. Be the first to add one.</div>`}
+      <div class="comment-input-row">
+        ${av(currentUser.name,32)}
+        <textarea id="cmt_${p.id}" placeholder="Add a comment..."></textarea>
+        <button class="btn btn-primary btn-sm" onclick="addComment(${p.id})">Post</button>
+      </div>
+    </div>`
+    :`<div class="stk-grid">${stCards||`<span style="font-size:13px;color:var(--text-3)">No stakeholders added yet.</span>`}</div>
+    <div class="stk-add">
+      <input type="text" id="ns_n_${p.id}" placeholder="Name" style="width:140px" />
+      <select id="ns_r_${p.id}"><option>Responsible</option><option>Accountable</option><option>Consulted</option><option>Informed</option></select>
+      <button class="btn btn-sm btn-primary" onclick="addSH(${p.id})">+ Add</button>
+    </div>`}
+    `:""}
+  </div>`;
+}
+
+function renderGantt(p){
+  if(!p.tasks.length)return`<div class="empty">No tasks to display.</div>`;
+  const allDates=p.tasks.filter(t=>t.due).map(t=>new Date(t.due+"T00:00:00"));
+  if(!allDates.length)return`<div class="empty">Add due dates to tasks to see the timeline.</div>`;
+  const minD=new Date(Math.min(...allDates));
+  const maxD=new Date(Math.max(...allDates));
+  minD.setDate(minD.getDate()-3);
+  maxD.setDate(maxD.getDate()+3);
+  const totalDays=Math.max((maxD-minD)/86400000,14);
+
+  const months=[];
+  let cur=new Date(minD);
+  while(cur<=maxD){
+    const label=cur.toLocaleDateString("en-IE",{month:"short",year:"2-digit"});
+    if(!months.length||months[months.length-1].label!==label)months.push({label,start:new Date(cur)});
+    cur.setDate(cur.getDate()+1);
+  }
+
+  const todayOff=Math.max(0,(today-minD)/86400000);
+  const todayPct=Math.min(100,todayOff/totalDays*100).toFixed(1);
+
+  const barCls={["Not started"]:"gantt-bar-ns","In progress":"gantt-bar-ip","Review":"gantt-bar-rv","Complete":"gantt-bar-co","Blocked":"gantt-bar-bl"};
+
+  const rows=p.tasks.map(t=>{
+    if(!t.due)return`<tr><td class="name-col">${t.name}</td><td colspan="10" style="font-size:11px;color:var(--text-3)">No due date set</td></tr>`;
+    const tDate=new Date(t.due+"T00:00:00");
+    const endOff=(tDate-minD)/86400000;
+    const startOff=Math.max(0,endOff-Math.max(t.estHrs||2,1)/8);
+    const barStart=(startOff/totalDays*100).toFixed(1);
+    const barWidth=Math.max(1.5,((endOff-startOff)/totalDays*100)).toFixed(1);
+    return`<tr>
+      <td class="name-col">${t.name}</td>
+      <td style="padding:0;position:relative">
+        <div style="position:relative;height:28px;width:100%">
+          <div style="position:absolute;left:${todayPct}%;top:0;bottom:0;border-left:1.5px dashed var(--red);opacity:0.5;z-index:1"></div>
+          <div class="gantt-bar ${barCls[t.status]||"gantt-bar-ns"}" style="position:absolute;left:${barStart}%;width:${barWidth}%;top:5px;height:18px" title="${t.name} — ${t.status} — Due ${fdShort(t.due)}"></div>
+        </div>
+      </td>
+    </tr>`;
+  }).join("");
+
+  return`<div class="gantt-wrap">
+    <table class="gantt-table">
+      <thead><tr>
+        <th class="name-col">Task</th>
+        <th style="padding:0;position:relative">
+          <div style="position:relative;height:24px">
+            ${months.map(m=>{
+              const off=((m.start-minD)/86400000/totalDays*100).toFixed(1);
+              return`<span style="position:absolute;left:${off}%;font-size:10px;white-space:nowrap;padding:4px 6px">${m.label}</span>`;
+            }).join("")}
+          </div>
+        </th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap">
+      ${Object.entries({["Not started"]:"gantt-bar-ns","In progress":"gantt-bar-ip","Review":"gantt-bar-rv","Complete":"gantt-bar-co","Blocked":"gantt-bar-bl"}).map(([k,v])=>`<span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-2)"><span class="gantt-bar ${v}" style="width:20px;height:10px;border-radius:2px;display:inline-block"></span>${k}</span>`).join("")}
+      <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-2)"><span style="width:0;border-left:1.5px dashed var(--red);height:14px;display:inline-block;margin:0 4px"></span>Today</span>
+    </div>
+  </div>`;
+}
+
+function toggleProj(pid){const p=state.projects.find(x=>x.id===pid);if(p)p.expanded=!p.expanded;save();renderAdmin();}
+function setTab(pid,t){state.activeTab[pid]=t;renderAdmin();}
+function updTaskGeo(pid,tid,val){
+  const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);
+  if(t){t.geo=val;save();renderAdmin();}
+}
+function updStatus(pid,tid,val){
+  const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);
+  if(!t)return;
+  const wasComplete = t.status==='Complete';
+  t.status=val;
+  if(val==='Complete' && !t.actualDate){
+    const now=new Date();
+    t.actualDate=now.toISOString().slice(0,10);
+    // Check if completed early
+    if(!wasComplete && t.due){
+      const target=new Date(t.due+'T00:00:00');
+      const actual=new Date(t.actualDate+'T00:00:00');
+      const daysEarly=Math.round((target-actual)/86400000);
+      if(daysEarly>0){
+        const owner=t.owner||currentUser.name;
+        setTimeout(()=>showCelebration(t.name,owner,daysEarly),400);
+      }
+    }
+  }
+  if(val!=='Complete' && t.actualDate){ t.actualDate=''; }
+  save();currentUser.role==="member"?renderMember():renderAdmin();
+}
+function delTask(pid,tid){
+  const p=state.projects.find(x=>x.id===pid); if(!p)return;
+  const idx=p.tasks.findIndex(x=>x.id===tid); if(idx===-1)return;
+  const task=p.tasks[idx];
+  pushUndo("task",{pid,index:idx,task:JSON.parse(JSON.stringify(task))});
+  p.tasks.splice(idx,1);
+  save(); renderAdmin();
+  showToast(`Task "${task.name}" deleted`);
+}
+function delProj(pid){
+  const idx = state.projects.findIndex(x=>x.id===pid);
+  if(idx===-1)return;
+  const proj = state.projects[idx];
+  pushUndo("project", {index: idx, project: JSON.parse(JSON.stringify(proj))});
+  state.projects.splice(idx,1);
+  save(); renderAdmin();
+  showToast(`Project "${proj.name}" deleted`);
+}
+function delSH(pid,sid){const p=state.projects.find(x=>x.id===pid);if(p){p.stakeholders=p.stakeholders.filter(x=>x.id!==sid);save();renderAdmin();}}
+
+function addTask(pid){
+  const n=document.getElementById("nt_n_"+pid)?.value.trim();if(!n)return;
+  const p=state.projects.find(x=>x.id===pid);
+  const maxId=p.tasks.reduce((m,t)=>Math.max(m,t.id),0);
+  const newDue = document.getElementById("nt_d_"+pid).value;
+  const geoEl = document.getElementById("nt_g_"+pid);
+  p.tasks.push({id:Math.max(maxId+1,state.nextTid++),name:n,owner:document.getElementById("nt_o_"+pid).value,due:newDue,originalDue:newDue,dueHistory:[],actualDate:'',status:document.getElementById("nt_s_"+pid).value,priority:document.getElementById("nt_p_"+pid).value,geo:geoEl?geoEl.value||"Group":"Group",estHrs:parseFloat(document.getElementById("nt_e_"+pid).value)||0,loggedHrs:parseFloat(document.getElementById("nt_l_"+pid).value)||0,notes:""});
+  save();renderAdmin();
+}
+function addSH(pid){
+  const n=document.getElementById("ns_n_"+pid)?.value.trim();if(!n)return;
+  const p=state.projects.find(x=>x.id===pid);
+  const maxId=(p.stakeholders||[]).reduce((m,s)=>Math.max(m,s.id),0);
+  if(!p.stakeholders)p.stakeholders=[];
+  p.stakeholders.push({id:maxId+1,name:n,role:document.getElementById("ns_r_"+pid).value});
+  document.getElementById("ns_n_"+pid).value="";
+  save();renderAdmin();
+}
+function addComment(pid){
+  const el=document.getElementById("cmt_"+pid);if(!el)return;
+  const text=el.value.trim();if(!text)return;
+  const p=state.projects.find(x=>x.id===pid);if(!p)return;
+  if(!p.comments)p.comments=[];
+  const now=new Date();
+  const ts=now.toLocaleDateString("en-IE",{day:"numeric",month:"short"})+", "+now.toLocaleTimeString("en-IE",{hour:"2-digit",minute:"2-digit"});
+  const maxId=p.comments.reduce((m,c)=>Math.max(m,c.id),0);
+  p.comments.push({id:maxId+1,author:currentUser.name,text,ts});
+  save();renderAdmin();
+}
+
+function openAddProj(){
+  modalHtml=`<div class="modal-overlay" onclick="if(event.target===this){modalHtml=null;renderAdmin()}">
+    <div class="modal">
+      <div class="modal-title">New project</div>
+      <div class="form-row">
+        <div class="fg" style="flex:2"><label>Project name</label><input type="text" id="mp_n" placeholder="e.g. Budget pack automation" /></div>
+        <div class="fg"><label>Type</label><select id="mp_t"><option>Process improvement</option><option>Reporting improvement</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Owner</label><select id="mp_o">${allOwners().map(o=>`<option>${o}</option>`).join("")}<option value="__new__">+ New person</option></select></div>
+        <div class="fg" id="mp_nw" style="display:none"><label>Owner name</label><input type="text" id="mp_on" /></div>
+        <div class="fg"><label>Due date</label><input type="date" id="mp_d" /></div>
+      </div>
+      <div class="form-row"><div class="fg"><label>Description</label><textarea id="mp_desc" placeholder="Brief description..."></textarea></div></div>
+      <div class="form-row">
+        <div class="fg" style="flex-direction:row;align-items:center;gap:10px">
+          <input type="checkbox" id="mp_est" checked style="width:15px;height:15px;cursor:pointer" />
+          <label style="font-size:13px;color:var(--text);cursor:pointer;text-transform:none;letter-spacing:0" for="mp_est">Enable time estimates &amp; logging for this project</label>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="modalHtml=null;renderAdmin()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitProj()">Add project</button>
+      </div>
+    </div>
+  </div>`;
+  renderAdmin();
+  document.getElementById("mp_o").addEventListener("change",function(){document.getElementById("mp_nw").style.display=this.value==="__new__"?"flex":"none";});
+}
+function submitProj(){
+  const n=document.getElementById("mp_n")?.value.trim();if(!n)return;
+  let owner=document.getElementById("mp_o").value;
+  if(owner==="__new__")owner=document.getElementById("mp_on").value.trim()||"Unassigned";
+  state.projects.push({id:state.nextPid++,name:n,type:document.getElementById("mp_t").value,owner,desc:document.getElementById("mp_desc").value.trim(),due:document.getElementById("mp_d").value,expanded:true,estEnabled:document.getElementById("mp_est").checked,stakeholders:[],comments:[],tasks:[]});
+  modalHtml=null;save();renderAdmin();
+}
+function openLog(pid,tid){
+  const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);if(!t)return;
+  const usedPct=t.estHrs&&t.loggedHrs?Math.round(t.loggedHrs/t.estHrs*100):null;
+  modalHtml=`<div class="modal-overlay" onclick="if(event.target===this){modalHtml=null;render()}">
+    <div class="modal">
+      <div class="modal-title">Log time — ${t.name}</div>
+      <div class="form-row">
+        <div class="fg"><label>Estimated hours</label><input type="number" id="lt_e" value="${t.estHrs||""}" min="0" step="0.5" /></div>
+        <div class="fg"><label>Hours logged so far</label><input type="number" id="lt_l" value="${t.loggedHrs||""}" min="0" step="0.5" /></div>
+      </div>
+      ${usedPct!==null?`<p style="font-size:12px;color:var(--text-2);margin-top:4px">${usedPct}% of estimate used${usedPct>100?' — <span style="color:var(--red)">over estimate</span>':''}</p>`:""}
+      <div class="modal-actions">
+        <button class="btn" onclick="modalHtml=null;render()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveLog(${pid},${tid})">Save</button>
+      </div>
+    </div>
+  </div>`;
+  render();
+}
+function saveLog(pid,tid){
+  const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);if(!t)return;
+  const estEl=document.getElementById("lt_e");
+  if(estEl) t.estHrs=parseFloat(estEl.value)||0;
+  t.loggedHrs=parseFloat(document.getElementById("lt_l").value)||0;
+  modalHtml=null;save();render();
+}
+
+
+function exportExcel() {
+  const wb = XLSX.utils.book_new();
+
+  // ── Sheet 1: Project summary ─────────────────────────────────────────────
+  const summaryRows = [
+    ["FP&A Ninjas — Project Tracker", "", "", "", "", ""],
+    ["Exported", new Date().toLocaleDateString("en-IE"), "", "", "", ""],
+    [],
+    ["Project", "Type", "Owner", "Target date", "Progress %", "Est hrs", "Logged hrs", "Blocked tasks", "Overdue tasks"]
+  ];
+  state.projects.forEach(p => {
+    const tasks = p.tasks;
+    const pp = tasks.length ? Math.round(tasks.filter(t=>t.status==="Complete").length/tasks.length*100) : 0;
+    const estHrs = tasks.reduce((a,t)=>a+(t.estHrs||0),0);
+    const logHrs = tasks.reduce((a,t)=>a+(t.loggedHrs||0),0);
+    const blocked = tasks.filter(t=>t.status==="Blocked").length;
+    const overdue = tasks.filter(t=>{if(!t.due||t.status==="Complete")return false;return new Date(t.due+"T00:00:00")<new Date();}).length;
+    summaryRows.push([p.name, p.type, p.owner, p.due||"", pp+"%", estHrs, logHrs, blocked, overdue]);
+  });
+  const wsSummary = XLSX.utils.aoa_to_sheet(summaryRows);
+  wsSummary['!cols'] = [{wch:40},{wch:24},{wch:16},{wch:14},{wch:12},{wch:10},{wch:10},{wch:12},{wch:12}];
+  XLSX.utils.book_append_sheet(wb, wsSummary, "Project Summary");
+
+  // ── Sheet 2: Full task list ──────────────────────────────────────────────
+  const taskRows = [
+    ["Project", "Type", "Task", "Owner", "Geography", "Original target", "Target date", "Actual date", "Date changes", "Status", "Priority", "Est hrs", "Logged hrs", "On time", "Notes"]
+  ];
+  state.projects.forEach(p => {
+    p.tasks.forEach(t => {
+      const slip = t.originalDue && t.due ? Math.round((new Date(t.due+"T00:00:00")-new Date(t.originalDue+"T00:00:00"))/86400000) : 0;
+      const history = (t.dueHistory||[]).map(h=>`${h.from}→${h.to} (${h.by})`).join("; ");
+      let onTime = "";
+      if (t.actualDate && t.due) {
+        const diff = Math.round((new Date(t.actualDate+"T00:00:00")-new Date(t.due+"T00:00:00"))/86400000);
+        onTime = diff < 0 ? `Early ${Math.abs(diff)}d` : diff === 0 ? "On time" : `Late ${diff}d`;
+      }
+      taskRows.push([
+        p.name, p.type, t.name, t.owner, t.geo||"Group",
+        t.originalDue||"", t.due||"", t.actualDate||"",
+        history||"", t.status, t.priority,
+        t.estHrs||0, t.loggedHrs||0, onTime, t.notes||""
+      ]);
+    });
+  });
+  const wsTasks = XLSX.utils.aoa_to_sheet(taskRows);
+  wsTasks['!cols'] = [{wch:36},{wch:22},{wch:40},{wch:14},{wch:8},{wch:14},{wch:14},{wch:14},{wch:30},{wch:14},{wch:10},{wch:8},{wch:8},{wch:12},{wch:40}];
+  XLSX.utils.book_append_sheet(wb, wsTasks, "All Tasks");
+
+  // ── Sheet 3: Timeline (one row per task, sorted by due date) ────────────
+  const tlRows = [
+    ["Timeline — sorted by target date", "", "", "", "", ""],
+    [],
+    ["Due date", "Project", "Task", "Owner", "Geography", "Status", "Priority", "Days to deadline", "Est hrs", "Notes"]
+  ];
+  const allTasks = state.projects.flatMap(p=>p.tasks.map(t=>({...t,projectName:p.name})));
+  allTasks.sort((a,b)=>(a.due||"9999").localeCompare(b.due||"9999"));
+  const today = new Date(); today.setHours(0,0,0,0);
+  allTasks.forEach(t => {
+    const daysTo = t.due ? Math.round((new Date(t.due+"T00:00:00")-today)/86400000) : "";
+    tlRows.push([
+      t.due||"", t.projectName, t.name, t.owner, t.geo||"Group",
+      t.status, t.priority, daysTo, t.estHrs||0, t.notes||""
+    ]);
+  });
+  const wsTimeline = XLSX.utils.aoa_to_sheet(tlRows);
+  wsTimeline['!cols'] = [{wch:12},{wch:36},{wch:40},{wch:14},{wch:8},{wch:14},{wch:10},{wch:14},{wch:8},{wch:40}];
+  XLSX.utils.book_append_sheet(wb, wsTimeline, "Timeline");
+
+  // ── Sheet 4: Cashflow project deep-dive ──────────────────────────────────
+  const cf = state.projects.find(p=>p.name.toLowerCase().includes("cashflow"));
+  if (cf) {
+    const cfRows = [
+      ["Cashflow reporting via Planful — Task detail"],
+      ["Target go-live", cf.due, "", "Owner", cf.owner],
+      [],
+      ["#", "Phase", "Task", "Due date", "Status", "Priority", "Est hrs", "Risk notes"]
+    ];
+    let phaseMap = {
+      "Define project charter":"Phase 1 — Initiation","Identify & onboard":"Phase 1 — Initiation","Establish RACI":"Phase 1 — Initiation","Document current-state":"Phase 1 — Initiation","Agree project timeline":"Phase 1 — Initiation",
+      "Document consolidated":"Phase 2 — Requirements","Map ERP chart":"Phase 2 — Requirements","Identify balance sheet movement drivers":"Phase 2 — Requirements","Define intercompany elimination rules":"Phase 2 — Requirements","Document FX translation":"Phase 2 — Requirements","Design target Planful report":"Phase 2 — Requirements","Obtain business sign-off on requirements":"Phase 2 — Requirements",
+      "Audit existing":"Phase 3 — Planful Config","Create/extend account":"Phase 3 — Planful Config","Configure ERP entity":"Phase 3 — Planful Config","Set up intercompany":"Phase 3 — Planful Config","Configure FX translation for cashflow":"Phase 3 — Planful Config","Build data load":"Phase 3 — Planful Config",
+      "Extract opening":"Phase 4 — BS Validation","Compute period":"Phase 4 — BS Validation","Reconcile BS":"Phase 4 — BS Validation","Validate non-cash":"Phase 4 — BS Validation","Identify & resolve BS":"Phase 4 — BS Validation","Finance sign-off on validated":"Phase 4 — BS Validation",
+      "Build indirect":"Phase 5 — CF Build","Map investing":"Phase 5 — CF Build","Map financing":"Phase 5 — CF Build","Build intercompany elimination":"Phase 5 — CF Build","Build opening/closing":"Phase 5 — CF Build","Configure ERP drill":"Phase 5 — CF Build",
+      "Prepare UAT":"Phase 6 — UAT","ERP 1":"Phase 6 — UAT","ERP 2":"Phase 6 — UAT","ERP 3":"Phase 6 — UAT","Resolve UAT":"Phase 6 — UAT","Finance UAT":"Phase 6 — UAT",
+      "Build management cashflow":"Phase 7 — Reporting","Configure report distribution":"Phase 7 — Reporting","Produce user guide":"Phase 7 — Reporting","Deliver end-user":"Phase 7 — Reporting","Obtain CFO":"Phase 7 — Reporting",
+      "Execute go-live":"Phase 8 — Go-Live","Perform production":"Phase 8 — Go-Live","Publish first":"Phase 8 — Go-Live","Hypercare":"Phase 8 — Go-Live","Post-implementation":"Phase 8 — Go-Live"
+    };
+    cf.tasks.forEach((t,i) => {
+      let phase = "—";
+      for (const [key, val] of Object.entries(phaseMap)) {
+        if (t.name.startsWith(key)) { phase = val; break; }
+      }
+      cfRows.push([i+1, phase, t.name, t.due||"", t.status, t.priority, t.estHrs||0, t.notes||""]);
+    });
+    const wsCF = XLSX.utils.aoa_to_sheet(cfRows);
+    wsCF['!cols'] = [{wch:4},{wch:26},{wch:50},{wch:12},{wch:14},{wch:10},{wch:8},{wch:60}];
+    XLSX.utils.book_append_sheet(wb, wsCF, "Cashflow Detail");
+  }
+
+  // ── Export ────────────────────────────────────────────────────────────────
+  const date = new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb, `sogelink_fpa_tracker_${date}.xlsx`);
+}
+
+function exportCSV(){
+  const rows=[["Project","Type","Owner","Project Due","Task","Task Owner","Task Due","Status","Priority","Est Hrs","Logged Hrs","Notes"]];
+  state.projects.forEach(p=>{
+    if(!p.tasks.length){rows.push([p.name,p.type,p.owner,p.due||"","","","","","","","",""]);return;}
+    p.tasks.forEach(t=>{rows.push([p.name,p.type,p.owner,p.due||"",t.name,t.owner,t.due||"",t.status,t.priority,t.estHrs||"",t.loggedHrs||"",t.notes||""]);});
+  });
+  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob=new Blob([csv],{type:"text/csv"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download=`sogelink_fpa_tracker_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+loadState().then(()=>render());
+
+// ── Dashboard ──────────────────────────────────────────────────────────────
+let _uiLang = 'en';
+function setUiLang(lang){_uiLang=lang;renderAdmin();}
+
+function ragStatus(p){
+  const tasks=p.tasks; if(!tasks.length)return'amber';
+  const blocked=tasks.filter(t=>t.status==='Blocked').length;
+  const overdue=tasks.filter(t=>{if(!t.due||t.status==='Complete')return false;return new Date(t.due+'T00:00:00')<today;}).length;
+  const pp=Math.round(tasks.filter(t=>t.status==='Complete').length/tasks.length*100);
+  if(blocked>0||overdue>2)return'red';
+  if(overdue>0||pp<20)return'amber';
+  return'green';
+}
+
+function renderDashboard(){
+  const allTasks=state.projects.flatMap(p=>p.tasks.map(t=>({...t,pName:p.name,pid:p.id})));
+  const now=new Date();now.setHours(0,0,0,0);
+  const in7=new Date(now);in7.setDate(in7.getDate()+7);
+  const dueSoon=allTasks.filter(t=>t.status!=='Complete'&&t.due&&new Date(t.due+'T00:00:00')<=in7&&new Date(t.due+'T00:00:00')>=now).sort((a,b)=>a.due.localeCompare(b.due)).slice(0,8);
+  const overdueTasks=allTasks.filter(t=>t.status!=='Complete'&&t.due&&new Date(t.due+'T00:00:00')<now);
+  const blockedTasks=allTasks.filter(t=>t.status==='Blocked');
+  const completed=allTasks.filter(t=>t.actualDate);
+  const onTime=completed.filter(t=>{if(!t.due)return false;return new Date(t.actualDate+'T00:00:00')<=new Date(t.due+'T00:00:00');});
+  const onTimePct=completed.length?Math.round(onTime.length/completed.length*100):null;
+  const s=gStats();
+  const geoCounts={};allTasks.forEach(t=>{const g=t.geo||'Group';geoCounts[g]=(geoCounts[g]||0)+1;});
+  const geoTotal=allTasks.length||1;
+  const geoColors={FR:'var(--blue-2)',NL:'#EF9F27',NO:'var(--red)',Group:'var(--navy)'};
+
+  const ragRows=state.projects.map(p=>{
+    const rag=ragStatus(p);const pp=pct(p.tasks);
+    const bl=p.tasks.filter(t=>t.status==='Blocked').length;
+    const ov=p.tasks.filter(t=>{if(!t.due||t.status==='Complete')return false;return new Date(t.due+'T00:00:00')<now;}).length;
+    return`<div class="rag-row"><div class="rag-dot rag-${rag}"></div><span class="rag-name">${p.name}</span><span class="rag-meta">${pp}% done${bl?' · '+bl+' blocked':''}${ov?' · '+ov+' overdue':''}</span><span class="tag ${p.type==='Process improvement'?'tag-process':'tag-reporting'}" style="font-size:10px">${p.type==='Process improvement'?'Process':'Reporting'}</span></div>`;
+  }).join('');
+
+  const dueRows=dueSoon.length?dueSoon.map(t=>`<div class="due-item"><span class="prio-dot ${pcls(t.priority)}"></span><div><div class="due-item-name">${t.name}</div><div class="due-item-proj">${t.pName}</div></div><span class="${dc(t.due,t.status)}">${fdShort(t.due)}</span><span class="chip">${av(t.owner,18)} ${t.owner}</span></div>`).join(''):'<div style="font-size:13px;color:var(--text-3);padding:8px 0">No tasks due in the next 7 days.</div>';
+  const blockedRows=blockedTasks.length?blockedTasks.map(t=>`<div class="blocked-item"><span style="font-size:14px">🔴</span><div><div style="font-weight:500;font-size:13px">${t.name}</div><div style="font-size:11px;color:var(--text-3)">${t.pName}</div></div><span class="chip">${av(t.owner,18)} ${t.owner}</span></div>`).join(''):'<div style="font-size:13px;color:var(--green);padding:8px 0">✓ No blocked tasks</div>';
+  const overdueRows=overdueTasks.length?overdueTasks.slice(0,6).map(t=>`<div class="blocked-item"><span class="badge s-bl" style="font-size:10px">Overdue</span><div><div style="font-weight:500;font-size:13px">${t.name}</div><div style="font-size:11px;color:var(--text-3)">${t.pName}</div></div><span class="${dc(t.due,t.status)}">${fdShort(t.due)}</span></div>`).join(''):'<div style="font-size:13px;color:var(--green);padding:8px 0">✓ No overdue tasks</div>';
+  const geoRows=Object.entries(geoCounts).map(([g,c])=>`<div class="geo-bar-row"><span style="min-width:44px">${geoBadge(g)}</span><div class="geo-bar-wrap"><div class="geo-bar-fill" style="width:${Math.round(c/geoTotal*100)}%;background:${geoColors[g]||'var(--navy)'}"></div></div><span style="min-width:30px;text-align:right;color:var(--text-2)">${c}</span></div>`).join('');
+
+  return`<div class="dash-grid">
+    <div class="dash-section dash-grid-full">
+      <div class="dash-stat-row">
+        <div class="dash-stat"><div class="dash-stat-val">${s.projects}</div><div class="dash-stat-label">Projects</div></div>
+        <div class="dash-stat"><div class="dash-stat-val">${s.tasks}</div><div class="dash-stat-label">Tasks</div></div>
+        <div class="dash-stat"><div class="dash-stat-val" style="color:var(--green)">${allTasks.filter(t=>t.status==='Complete').length}</div><div class="dash-stat-label">Complete</div></div>
+        <div class="dash-stat"><div class="dash-stat-val" style="color:var(--blue-2)">${allTasks.filter(t=>t.status==='In progress').length}</div><div class="dash-stat-label">In progress</div></div>
+        <div class="dash-stat"><div class="dash-stat-val" style="color:var(--red)">${blockedTasks.length}</div><div class="dash-stat-label">Blocked</div></div>
+        <div class="dash-stat"><div class="dash-stat-val" style="color:var(--amber)">${overdueTasks.length}</div><div class="dash-stat-label">Overdue</div></div>
+        <div class="dash-stat"><div class="dash-stat-val" style="color:${onTimePct>=80?'var(--green)':onTimePct>=60?'#EF9F27':'var(--red)'}">${onTimePct!==null?onTimePct+'%':'—'}</div><div class="dash-stat-label">On time</div></div>
+        <div class="dash-stat"><div class="dash-stat-val">${Math.round(allTasks.reduce((a,t)=>a+(t.loggedHrs||0),0)*10)/10}</div><div class="dash-stat-label">Hrs logged</div></div>
+      </div>
+    </div>
+    <div class="dash-section"><h3>Project RAG status</h3>${ragRows}</div>
+    <div class="dash-section"><h3>Due this week <span style="font-size:11px;font-weight:400;color:var(--text-3)">${dueSoon.length} tasks</span></h3>${dueRows}</div>
+    <div class="dash-section"><h3>Blocked <span style="font-size:11px;font-weight:400;color:var(--text-3)">${blockedTasks.length}</span></h3>${blockedRows}</div>
+    <div class="dash-section"><h3>Overdue <span style="font-size:11px;font-weight:400;color:var(--text-3)">${overdueTasks.length}</span></h3>${overdueRows}</div>
+    <div class="dash-section"><h3>Tasks by geography</h3>${geoRows}</div>
+    <div class="dash-section"><h3>Quick actions</h3>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn" style="justify-content:center" onclick="exportWeeklyDigest()">📧 Weekly digest</button>
+        <button class="btn btn-export" style="justify-content:center;background:var(--green);border-color:var(--green);color:#fff" onclick="exportExcel()">📊 Export to Excel</button>
+        <button class="btn" style="justify-content:center;border-color:var(--navy);color:var(--navy)" onclick="exportDataBackup()">💾 Export data backup</button>
+        <button class="btn" style="justify-content:center" onclick="openImportModal()">📂 Restore from backup</button>
+        <button class="btn" style="justify-content:center" onclick="state.mainTab='projects';save();renderAdmin()">View all projects →</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── Date change reason ─────────────────────────────────────────────────────
+let _pendingDateChange=null;
+
+function updateTargetDate(pid,tid,newDue){
+  const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);
+  if(!t||t.due===newDue)return;
+  if(!t.due){applyDateChange(pid,tid,newDue,'Initial date set');return;}
+  if(newDue>t.due){_pendingDateChange={pid,tid,newDue,oldDue:t.due};showDateReasonModal(t.name,t.due,newDue);}
+  else{applyDateChange(pid,tid,newDue,'Date moved earlier');}
+}
+function showDateReasonModal(taskName,oldDue,newDue){
+  const overlay=document.createElement('div');overlay.className='date-reason-overlay';overlay.id='date-reason-overlay';
+  overlay.innerHTML=`<div class="date-reason-modal"><h3>Why is this date moving?</h3><p>Moving <strong>${taskName}</strong> from <strong>${fdShort(oldDue)}</strong> to <strong>${fdShort(newDue)}</strong>. Please give a brief reason — this is logged in the date history.</p><input type="text" id="date-reason-input" placeholder="e.g. Waiting on ERP SME availability..." maxlength="120" /><div class="date-reason-actions"><button class="btn" onclick="cancelDateChange()">Cancel</button><button class="btn btn-primary" onclick="confirmDateChange()">Confirm</button></div></div>`;
+  overlay.onclick=function(e){if(e.target===overlay)cancelDateChange();};
+  document.body.appendChild(overlay);
+  setTimeout(()=>{const el=document.getElementById('date-reason-input');if(el){el.focus();el.addEventListener('keydown',e=>{if(e.key==='Enter')confirmDateChange();});}},50);
+}
+function cancelDateChange(){const el=document.getElementById('date-reason-overlay');if(el)el.remove();_pendingDateChange=null;renderAdmin();}
+function confirmDateChange(){
+  const el=document.getElementById('date-reason-input');const reason=el?el.value.trim():'';
+  if(!reason){if(el){el.style.borderColor='var(--red)';el.placeholder='Please enter a reason...';}return;}
+  document.getElementById('date-reason-overlay')?.remove();
+  if(_pendingDateChange){applyDateChange(_pendingDateChange.pid,_pendingDateChange.tid,_pendingDateChange.newDue,reason);_pendingDateChange=null;}
+}
+function applyDateChange(pid,tid,newDue,reason){
+  const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);if(!t)return;
+  const now=new Date();const ts=now.toLocaleDateString('en-IE',{day:'numeric',month:'short'})+', '+now.toLocaleTimeString('en-IE',{hour:'2-digit',minute:'2-digit'});
+  if(!t.dueHistory)t.dueHistory=[];
+  t.dueHistory.push({from:t.due,to:newDue,by:currentUser.name,ts,reason});
+  t.due=newDue;save();renderAdmin();
+}
+
+// ── Subtasks & notes panel ─────────────────────────────────────────────────
+function toggleSubtaskPanel(pid,tid){
+  if(!state.expandedTasks)state.expandedTasks={};
+  const key=pid+'_'+tid;state.expandedTasks[key]=!state.expandedTasks[key];renderAdmin();
+}
+function isTaskExpanded(pid,tid){return state.expandedTasks&&state.expandedTasks[pid+'_'+tid];}
+function toggleSubtaskDone(pid,tid,sid){
+  const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);if(!t||!t.subtasks)return;
+  const s=t.subtasks.find(x=>x.id===sid);if(!s)return;s.done=!s.done;
+  if(t.subtasks.every(x=>x.done)&&t.status!=='Complete'){t.status='Complete';if(!t.actualDate)t.actualDate=new Date().toISOString().slice(0,10);}
+  save();renderAdmin();
+}
+function addSubtask(pid,tid){
+  const n=document.getElementById('st_n_'+pid+'_'+tid)?.value.trim();if(!n)return;
+  const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);if(!t)return;
+  if(!t.subtasks)t.subtasks=[];
+  const maxId=t.subtasks.reduce((m,s)=>Math.max(m,s.id),0);
+  t.subtasks.push({id:maxId+1,name:n,owner:document.getElementById('st_o_'+pid+'_'+tid)?.value||'',due:document.getElementById('st_d_'+pid+'_'+tid)?.value||'',done:false});
+  document.getElementById('st_n_'+pid+'_'+tid).value='';save();renderAdmin();
+}
+function deleteSubtask(pid,tid,sid){const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);if(!t)return;t.subtasks=(t.subtasks||[]).filter(x=>x.id!==sid);save();renderAdmin();}
+function renderSubtaskPanel(p,t){
+  const subs=t.subtasks||[];
+  const subRows=subs.map(s=>`<div class="subtask-row"><input type="checkbox" class="subtask-check" ${s.done?'checked':''} onchange="toggleSubtaskDone(${p.id},${t.id},${s.id})" /><span class="subtask-name ${s.done?'done':''}">${s.name}</span>${s.owner?`<span class="subtask-owner">${av(s.owner,16)} ${s.owner}</span>`:''} ${s.due?`<span class="subtask-due ${dc(s.due,s.done?'Complete':'')}">${fdShort(s.due)}</span>`:''}<button class="btn btn-danger" style="padding:1px 6px;font-size:11px" onclick="deleteSubtask(${p.id},${t.id},${s.id})">×</button></div>`).join('');
+  return`<div class="subtask-wrap">${subRows}<div class="subtask-add-row"><input type="text" id="st_n_${p.id}_${t.id}" placeholder="Add subtask..." style="flex:1;min-width:120px" /><select id="st_o_${p.id}_${t.id}" style="width:100px"><option value="">Owner...</option>${allOwners().map(o=>`<option>${o}</option>`).join('')}</select><input type="date" id="st_d_${p.id}_${t.id}" style="width:120px" /><button class="btn btn-sm btn-primary" onclick="addSubtask(${p.id},${t.id})">+ Add</button></div></div><div class="notes-panel"><label>Task notes</label><textarea id="tn_${p.id}_${t.id}" placeholder="Add detailed notes...">${t.notes||''}</textarea><button class="btn btn-sm" style="margin-top:6px" onclick="saveTaskNotes(${p.id},${t.id})">Save notes</button></div>`;
+}
+function saveTaskNotes(pid,tid){
+  const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);if(!t)return;
+  const el=document.getElementById('tn_'+pid+'_'+tid);if(!el)return;t.notes=el.value;save();showToast('Notes saved');
+}
+
+// ── Task comment thread ────────────────────────────────────────────────────
+let _threadPid=null,_threadTid=null,_threadTaskName=null;
+function openTaskThread(pid,tid,taskName){
+  _threadPid=pid;_threadTid=tid;_threadTaskName=taskName;
+  document.getElementById('task-thread-overlay')?.remove();
+  const overlay=document.createElement('div');overlay.className='task-thread-overlay';overlay.id='task-thread-overlay';
+  overlay.onclick=function(e){if(e.target===overlay)closeTaskThread();};
+  document.body.appendChild(overlay);renderThread();
+  setTimeout(()=>{document.getElementById('thread-input-ta')?.focus();},80);
+}
+function closeTaskThread(){document.getElementById('task-thread-overlay')?.remove();_threadPid=null;_threadTid=null;}
+function getThreadTask(){const p=state.projects.find(x=>x.id===_threadPid);return p&&p.tasks.find(x=>x.id===_threadTid);}
+function renderThread(){
+  const overlay=document.getElementById('task-thread-overlay');if(!overlay)return;
+  const t=getThreadTask();if(!t)return;
+  const notes=t.taskNotes||[];
+  const myName=currentUser.name;
+  const tagged=notes.filter(n=>(n.tagged||[]).includes(myName)&&n.author!==myName);
+  const commentsHtml=notes.length?notes.map(n=>{
+    const rawText=(n.text||'').replace(/@([\w][\w .]+)/g,(match,name)=>{return allOwners().some(o=>o===name)?`<span class="tn-mention">@${name}</span>`:match;});
+    const isFr=looksLikeFrench(n.text||'');
+    return`<div class="tn-comment">${av(n.author,30)}<div class="tn-comment-body"><div class="tn-comment-top"><span class="tn-comment-author">${n.author} ${isFr?'🇫🇷':''}</span><span class="tn-comment-ts">${n.ts}</span></div><div class="tn-comment-text">${rawText}${n.translation?`<div class="translation-block"><div class="tl-label">🇬🇧 English translation</div>${n.translation}</div>`:''}</div>${(n.tagged||[]).length?`<div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap">${(n.tagged||[]).map(u=>`<span style="font-size:10px;background:var(--blue-light);color:var(--blue);border-radius:99px;padding:1px 7px">@${u}</span>`).join('')}</div>`:''}<div style="margin-top:8px">${isFr&&!n.translation?`<button class="translate-btn" onclick="translateComment(_threadPid,_threadTid,${n.id},this)">🇬🇧 Translate</button>`:''}${n.translation?`<button class="translate-btn" onclick="translateComment(_threadPid,_threadTid,${n.id},this)">✕ Hide</button>`:''}</div></div></div>`;
+  }).join(''):`<div class="tn-empty">No notes yet.</div>`;
+  overlay.innerHTML=`<div class="task-thread-modal"><div class="task-thread-header"><div class="task-thread-title">📝 ${_threadTaskName}</div><div class="task-thread-sub">Task notes & comments</div></div><div class="task-thread-body" id="thread-body">${tagged.length?`<div class="tn-tagged-banner">🔔 You were tagged in ${tagged.length} note${tagged.length>1?'s':''}</div>`:''}${commentsHtml}</div><div class="task-thread-input"><div class="thread-textarea-wrap"><textarea class="thread-textarea" id="thread-input-ta" placeholder="Add a note... Type @ to tag someone" oninput="handleThreadInput(this)" onkeydown="handleThreadKey(event)"></textarea><div class="mention-dropdown" id="mention-dropdown" style="display:none"></div></div><div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px"><span class="thread-hint">@ to tag · Enter to post · Shift+Enter for new line</span><div class="thread-actions"><button class="btn btn-sm" onclick="closeTaskThread()">Close</button><button class="btn btn-sm btn-primary" onclick="postThreadNote()">Post note</button></div></div></div></div>`;
+  setTimeout(()=>{const b=document.getElementById('thread-body');if(b)b.scrollTop=b.scrollHeight;},50);
+}
+function handleThreadInput(ta){
+  const val=ta.value;const cursor=ta.selectionStart;const textBefore=val.slice(0,cursor);
+  const atMatch=textBefore.match(/@([\w ]*)$/);const dd=document.getElementById('mention-dropdown');
+  if(atMatch){const query=atMatch[1].toLowerCase();const matches=allOwners().filter(o=>o.toLowerCase().includes(query)&&o!==currentUser.name);if(matches.length){dd.style.display='block';dd.innerHTML=matches.map(m=>`<div class="mention-item" onmousedown="insertMention('${m}')">${av(m,22)} ${m}</div>`).join('');return;}}
+  dd.style.display='none';
+}
+function insertMention(name){const ta=document.getElementById('thread-input-ta');if(!ta)return;const val=ta.value;const cursor=ta.selectionStart;const replaced=val.slice(0,cursor).replace(/@([\w ]*)$/,'@'+name+' ');ta.value=replaced+val.slice(cursor);ta.focus();ta.setSelectionRange(replaced.length,replaced.length);document.getElementById('mention-dropdown').style.display='none';}
+function handleThreadKey(e){const dd=document.getElementById('mention-dropdown');if(dd&&dd.style.display!=='none'){if(e.key==='Escape')dd.style.display='none';return;}if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();postThreadNote();}}
+function postThreadNote(){
+  const ta=document.getElementById('thread-input-ta');if(!ta)return;const text=ta.value.trim();if(!text)return;
+  const t=getThreadTask();if(!t)return;if(!t.taskNotes)t.taskNotes=[];
+  const mentions=[];const re=/@([\w][\w .]+)/g;let m;while((m=re.exec(text))!==null){const name=m[1].trim();if(allOwners().includes(name)&&!mentions.includes(name))mentions.push(name);}
+  const now=new Date();const ts=now.toLocaleDateString('en-IE',{day:'numeric',month:'short'})+', '+now.toLocaleTimeString('en-IE',{hour:'2-digit',minute:'2-digit'});
+  const maxId=t.taskNotes.reduce((mx,n)=>Math.max(mx,n.id),0);
+  const newNote={id:maxId+1,author:currentUser.name,text,ts,tagged:mentions};
+  t.taskNotes.push(newNote);ta.value='';document.getElementById('mention-dropdown').style.display='none';save();renderThread();
+  if(mentions.length)showToast(`Note posted — tagged ${mentions.join(', ')}`);else showToast('Note posted');
+  if(looksLikeFrench(text)){showToast('🇫🇷 French detected — translating...');autoTranslateNote(_threadPid,_threadTid,newNote.id);}
+}
+function myTagCount(){if(!currentUser)return 0;return state.projects.flatMap(p=>p.tasks).reduce((count,t)=>{return count+(t.taskNotes||[]).filter(n=>(n.tagged||[]).includes(currentUser.name)&&n.author!==currentUser.name).length;},0);}
+
+// ── French translation ─────────────────────────────────────────────────────
+const FR_WORDS=['le','la','les','un','une','des','est','sont','dans','avec','pour','sur','par','que','qui','pas','plus','très','nous','vous','ils','elles','mais','donc','aussi','comme','tout','cette','être','avoir','faire','aller','voir','venir','bien','même','encore','après','avant','depuis','pendant','selon','entre'];
+function looksLikeFrench(text){if(!text||text.length<8)return false;const words=text.toLowerCase().split(/\s+/);const fr=words.filter(w=>FR_WORDS.includes(w.replace(/[^a-zàâéèêëîïôùûüç]/g,''))).length;const hasAccents=/[àâéèêëîïôùûüçÀÂÉÈÊËÎÏÔÙÛÜÇ]/.test(text);return hasAccents||(words.length>=3&&fr>=2);}
+async function translateToEnglish(text){try{const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:`Translate the following French text to English. Reply with ONLY the English translation, nothing else:
+
+${text}`}]})});const data=await resp.json();return data.content?.[0]?.text?.trim()||null;}catch(e){return null;}}
+async function translateComment(pid,tid,noteId,btnEl){const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);if(!t)return;const note=(t.taskNotes||[]).find(n=>n.id===noteId);if(!note)return;if(note.translation){delete note.translation;save();renderThread();return;}btnEl.textContent='Translating...';const result=await translateToEnglish(note.text);if(result){note.translation=result;save();renderThread();}else{btnEl.textContent='Failed';}}
+async function autoTranslateNote(pid,tid,noteId){const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);if(!t)return;const note=(t.taskNotes||[]).find(n=>n.id===noteId);if(!note||note.translation)return;const result=await translateToEnglish(note.text);if(result){note.translation=result;save();renderThread();}}
+async function translateTaskName(pid,tid,btnEl){const p=state.projects.find(x=>x.id===pid);const t=p&&p.tasks.find(x=>x.id===tid);if(!t)return;if(t.translatedName){delete t.translatedName;save();renderAdmin();return;}btnEl.textContent='Translating...';const result=await translateToEnglish(t.name);if(result){t.translatedName=result;save();renderAdmin();}else{btnEl.textContent='Failed';}}
+
+// ── Backup & restore ───────────────────────────────────────────────────────
+function exportDataBackup(){
+  const backup={version:'sogelink_fpa_v1',exported:new Date().toISOString(),exportedBy:currentUser?currentUser.name:'Unknown',data:state};
+  const json=JSON.stringify(backup,null,2);
+  const existing=document.getElementById('backup-modal-overlay');if(existing)existing.remove();
+  const overlay=document.createElement('div');overlay.id='backup-modal-overlay';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(10,22,40,0.55);display:flex;align-items:center;justify-content:center;z-index:500;padding:20px';
+  overlay.innerHTML=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;width:540px;max-width:100%;box-shadow:var(--shadow-md);max-height:85vh;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:15px;font-weight:500;color:var(--navy)">💾 Data backup</div><button onclick="document.getElementById('backup-modal-overlay').remove()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--text-3)">×</button></div><div style="font-size:13px;color:var(--text-2);line-height:1.5">Click <strong>Copy to clipboard</strong>, then open Notepad, paste and save as <strong>fpa_ninjas_backup_${new Date().toISOString().slice(0,10)}.json</strong></div><div style="display:flex;gap:8px;align-items:center"><button id="backup-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('backup-json-text').value).then(()=>{this.textContent='✓ Copied!';this.style.background='var(--green)';}).catch(()=>{document.getElementById('backup-json-text').select();document.execCommand('copy');this.textContent='✓ Copied!';})" style="background:var(--blue);color:#fff;border:none;border-radius:var(--radius-sm);padding:8px 18px;font-size:13px;cursor:pointer;font-family:var(--font);font-weight:500">Copy to clipboard</button><span style="font-size:12px;color:var(--text-3)">${new Date().toLocaleDateString('en-IE')}</span></div><textarea id="backup-json-text" readonly style="flex:1;min-height:220px;max-height:340px;font-family:monospace;font-size:11px;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#F8F9FA;color:var(--text);resize:none;overflow-y:auto">${json.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</textarea></div>`;
+  document.body.appendChild(overlay);overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
+}
+function openImportModal(){
+  const overlay=document.createElement('div');overlay.className='import-overlay';overlay.id='import-overlay';overlay.onclick=function(e){if(e.target===overlay)closeImportModal();};
+  overlay.innerHTML=`<div class="import-modal"><h3>Restore from backup</h3><p>Select a backup JSON file previously exported from this tracker.</p><div class="import-drop" id="import-drop" onclick="document.getElementById('import-file-input').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleImportDrop(event)"><div style="font-size:28px;margin-bottom:8px">📂</div><div class="import-drop-label">Click to select backup file</div><div class="import-drop-sub">or drag and drop your .json backup here</div></div><input type="file" id="import-file-input" accept=".json" style="display:none" onchange="handleImportFile(this)" /><div class="import-actions"><button class="btn" onclick="closeImportModal()">Cancel</button></div></div>`;
+  document.body.appendChild(overlay);
+}
+function closeImportModal(){document.getElementById('import-overlay')?.remove();}
+function handleImportDrop(e){e.preventDefault();document.getElementById('import-drop').classList.remove('dragover');const file=e.dataTransfer.files[0];if(file)processImportFile(file);}
+function handleImportFile(input){const file=input.files[0];if(file)processImportFile(file);}
+function processImportFile(file){
+  if(!file.name.endsWith('.json')){showToast('Please select a .json backup file');return;}
+  const reader=new FileReader();
+  reader.onload=function(e){try{const backup=JSON.parse(e.target.result);if(!backup.data||!backup.data.projects){showToast('Invalid backup file');return;}const pc=backup.data.projects.length;const tc=backup.data.projects.flatMap(p=>p.tasks).length;const ed=backup.exported?new Date(backup.exported).toLocaleDateString('en-IE',{day:'numeric',month:'short',year:'numeric'}):'unknown';if(confirm(`Restore backup from ${ed}?\n\n${pc} projects, ${tc} tasks.\n\nThis replaces your current data.`)){state=backup.data;localStorage.setItem('sogelink_fpa_live',JSON.stringify(state));closeImportModal();render();showToast(`✓ Backup restored — ${pc} projects, ${tc} tasks`);}}catch(err){showToast('Could not read backup file');}};
+  reader.readAsText(file);
+}
+
+// ── Weekly digest ──────────────────────────────────────────────────────────
+function exportWeeklyDigest(){
+  const now=new Date();const weekStr=now.toLocaleDateString('en-IE',{day:'numeric',month:'long',year:'numeric'});
+  const in7=new Date(now);in7.setDate(in7.getDate()+7);const todayD=new Date();todayD.setHours(0,0,0,0);
+  const allTasks=state.projects.flatMap(p=>p.tasks.map(t=>({...t,pName:p.name})));
+  const dueSoon=allTasks.filter(t=>t.status!=='Complete'&&t.due&&new Date(t.due+'T00:00:00')<=in7&&new Date(t.due+'T00:00:00')>=todayD).sort((a,b)=>a.due.localeCompare(b.due));
+  const overdueTasks=allTasks.filter(t=>t.status!=='Complete'&&t.due&&new Date(t.due+'T00:00:00')<todayD);
+  const blockedTasks=allTasks.filter(t=>t.status==='Blocked');
+  const completedThisWeek=allTasks.filter(t=>{if(!t.actualDate)return false;const d=new Date(t.actualDate+'T00:00:00');const wk=new Date(now);wk.setDate(wk.getDate()-7);return d>=wk;});
+  const s=gStats();
+  let html2=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>FP&A Ninjas Weekly Digest ${weekStr}</title><style>body{font-family:'Segoe UI',Arial,sans-serif;max-width:700px;margin:0 auto;padding:32px 24px;color:#0A1628;}h1{font-size:22px;font-weight:300;letter-spacing:-0.02em;margin-bottom:4px;}h2{font-size:14px;font-weight:600;margin:24px 0 10px;padding-bottom:6px;border-bottom:2px solid #E5E7EB;}table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;}th{text-align:left;padding:6px 10px;background:#F4F7FC;font-size:11px;font-weight:600;text-transform:uppercase;color:#6B7280;}td{padding:8px 10px;border-bottom:1px solid #F0F0F0;}.green{background:#E4F5EE;color:#0E6B4A;border-radius:99px;padding:2px 8px;font-size:11px;font-weight:500;}.amber{background:#FDF2DC;color:#8A5200;border-radius:99px;padding:2px 8px;font-size:11px;font-weight:500;}.red{background:#FAEAEA;color:#A81B1B;border-radius:99px;padding:2px 8px;font-size:11px;font-weight:500;}.stat-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;}.stat{background:#F4F7FC;border-radius:8px;padding:12px 16px;text-align:center;min-width:80px;}.stat-val{font-size:24px;font-weight:300;}.stat-label{font-size:11px;color:#6B7280;}</style></head><body>
+  <div style="font-size:11px;letter-spacing:0.06em;color:#1B5FA8;font-weight:600;margin-bottom:6px">SOGELINK · FP&A NINJAS</div>
+  <h1>Weekly Project Digest</h1><div style="font-size:13px;color:#6B7280;margin-bottom:28px">Week of ${weekStr}</div>
+  <div class="stat-row"><div class="stat"><div class="stat-val">${s.projects}</div><div class="stat-label">Projects</div></div><div class="stat"><div class="stat-val">${s.tasks}</div><div class="stat-label">Tasks</div></div><div class="stat"><div class="stat-val" style="color:#0E6B4A">${s.done}</div><div class="stat-label">Complete</div></div><div class="stat"><div class="stat-val" style="color:#A81B1B">${s.blocked}</div><div class="stat-label">Blocked</div></div><div class="stat"><div class="stat-val" style="color:#8A5200">${s.overdue}</div><div class="stat-label">Overdue</div></div></div>`;
+  html2+=`<h2>Project Status</h2><table><tr><th>Project</th><th>Progress</th><th>Status</th><th>Due</th></tr>`;
+  state.projects.forEach(p=>{const rag=ragStatus(p);const pp=pct(p.tasks);const label=rag==='green'?'On track':rag==='amber'?'At risk':'Off track';html2+=`<tr><td><strong>${p.name}</strong></td><td>${pp}%</td><td><span class="${rag}">${label}</span></td><td style="font-size:12px">${fdShort(p.due)}</td></tr>`;});html2+=`</table>`;
+  if(dueSoon.length){html2+=`<h2>Due This Week (${dueSoon.length})</h2><table><tr><th>Task</th><th>Project</th><th>Owner</th><th>Due</th></tr>`;dueSoon.forEach(t=>{html2+=`<tr><td>${t.name}</td><td style="font-size:11px;color:#6B7280">${t.pName}</td><td>${t.owner}</td><td><strong>${fdShort(t.due)}</strong></td></tr>`;});html2+=`</table>`;}
+  if(completedThisWeek.length){html2+=`<h2>Completed This Week 🎉 (${completedThisWeek.length})</h2><table><tr><th>Task</th><th>Project</th><th>Owner</th><th>Completed</th></tr>`;completedThisWeek.forEach(t=>{html2+=`<tr><td>${t.name}</td><td style="font-size:11px;color:#6B7280">${t.pName}</td><td>${t.owner}</td><td>${fdShort(t.actualDate)}</td></tr>`;});html2+=`</table>`;}
+  if(blockedTasks.length){html2+=`<h2>Blocked 🔴</h2><table><tr><th>Task</th><th>Project</th><th>Owner</th></tr>`;blockedTasks.forEach(t=>{html2+=`<tr><td><strong>${t.name}</strong></td><td style="font-size:11px;color:#6B7280">${t.pName}</td><td>${t.owner}</td></tr>`;});html2+=`</table>`;}
+  if(overdueTasks.length){html2+=`<h2>Overdue ⚠️</h2><table><tr><th>Task</th><th>Project</th><th>Was due</th></tr>`;overdueTasks.forEach(t=>{html2+=`<tr><td>${t.name}</td><td style="font-size:11px;color:#6B7280">${t.pName}</td><td style="color:#A81B1B"><strong>${fdShort(t.due)}</strong></td></tr>`;});html2+=`</table>`;}
+  html2+=`<div style="margin-top:32px;padding-top:16px;border-top:1px solid #E5E7EB;font-size:11px;color:#9CA3AF;">Generated by FP&A Ninjas Tracker · Sogelink · ${now.toLocaleString('en-IE')}</div></body></html>`;
+  const w=window.open('','_blank');
+  if(w){w.document.open();w.document.write(html2);w.document.close();}
+  else{showToast('Please allow popups to view the digest');}
+}
+
+</script>
+</body>
+</html>
