@@ -324,31 +324,37 @@ async function loadState(){
   if(!state.activeTab)state.activeTab={};
   if(!state.mainTab)state.mainTab="dashboard";
   if(!state.teamMembers||!state.teamMembers.length)state.teamMembers=[ADMIN,"Louis","Rayane","Alex","Antoine","Martin","Laure-Helene","Philippe","Christelle","Aisha","Thomas"];
-  // DEF version sync — always sync LE template fields to active cycle
+  // Always replace LE workflow entirely from DEF (ensures latest tasks/data)
   const defLe=(DEF.workflows||[]).find(w=>w.name&&w.name.includes("Latest Estimate"));
-  const stateLe=(state.workflows||[]).find(w=>w.name&&w.name.includes("Latest Estimate"));
-  if(defLe&&stateLe){
-    // Always update template from DEF
-    stateLe.template=JSON.parse(JSON.stringify(defLe.template));
-    // Sync phase/meeting/stakeholder fields to active cycle tasks
-    if(stateLe.cycles&&stateLe.cycles.length){
-      const ac=stateLe.cycles[0];
-      ac.tasks.forEach(ct=>{
-        const tmpl=stateLe.template.find(t=>t.name===ct.name)||stateLe.template[ac.tasks.indexOf(ct)];
-        if(tmpl){
-          ct.phase=tmpl.phase||ct.phase||"";
-          ct.stakeholders=tmpl.stakeholders||ct.stakeholders||"";
-          ct.meetingNeeded=tmpl.meetingNeeded!==undefined?tmpl.meetingNeeded:ct.meetingNeeded||false;
-          ct.meetingSetup=tmpl.meetingSetup!==undefined?tmpl.meetingSetup:ct.meetingSetup||false;
-          ct.meetingComment=tmpl.meetingComment||ct.meetingComment||"";
-          ct.meetingOwner=tmpl.meetingOwner||ct.meetingOwner||"";
-          ct.notes=ct.notes||tmpl.notes||"";
-          ct.geo=ct.geo||tmpl.geo||"Group";
-        }
-      });
+  const leIdx=(state.workflows||[]).findIndex(w=>w.name&&w.name.includes("Latest Estimate"));
+  if(defLe){
+    const fresh=JSON.parse(JSON.stringify(defLe));
+    if(leIdx>=0){
+      // Preserve task statuses, logged hours and notes from saved data
+      const savedCycle=state.workflows[leIdx].cycles&&state.workflows[leIdx].cycles[0];
+      const savedHistory=state.workflows[leIdx].history||[];
+      if(savedCycle&&fresh.cycles&&fresh.cycles[0]){
+        fresh.cycles[0].tasks.forEach(ft=>{
+          const saved=savedCycle.tasks&&savedCycle.tasks.find(st=>st.name===ft.name);
+          if(saved){
+            ft.status=saved.status||ft.status;
+            ft.actualDate=saved.actualDate||ft.actualDate;
+            ft.loggedHrs=saved.loggedHrs||ft.loggedHrs;
+            ft.taskNotes=saved.taskNotes||ft.taskNotes;
+            ft.subtasks=saved.subtasks||ft.subtasks;
+            // Keep meetingSetup if user already toggled it
+            if(saved.meetingSetup) ft.meetingSetup=true;
+          }
+        });
+      }
+      fresh.history=savedHistory;
+      state.workflows[leIdx]=fresh;
+    } else {
+      if(!state.workflows)state.workflows=[];
+      state.workflows.push(fresh);
     }
   }
-  if((DEF.defVersion||0)>(state.defVersion||0)) state.defVersion=DEF.defVersion;
+  state.defVersion=DEF.defVersion||8;
   // Merge new DEF projects
   const sIds=new Set(state.projects.map(p=>p.id));
   JSON.parse(JSON.stringify(DEF)).projects.filter(p=>!sIds.has(p.id)).forEach(p=>state.projects.push(p));
