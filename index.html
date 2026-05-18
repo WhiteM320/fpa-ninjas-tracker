@@ -345,14 +345,25 @@ function save(){
 }
 async function loadState(){
   document.getElementById("app").innerHTML='<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy);flex-direction:column;gap:12px"><div style="color:#fff;font-size:16px;font-weight:300">Loading FP&A Ninjas...</div></div>';
+  let cloudState=null;
   try{
     const r=await fetch(CF_URL,{method:"GET",headers:{"X-API-Key":CF_KEY}});
-    if(r.ok){const t=await r.text();state=t&&t!=="null"?JSON.parse(t):null;}
+    if(r.ok){const t=await r.text();cloudState=t&&t!=="null"?JSON.parse(t):null;}
     else throw new Error(r.status);
   }catch(e){
     console.warn("Cloud load failed:",e);
-    const s=localStorage.getItem("sogelink_fpa_live");
-    state=s?JSON.parse(s):null;
+  }
+  const localRaw=localStorage.getItem("sogelink_fpa_live");
+  const localState=localRaw?JSON.parse(localRaw):null;
+  // Cloud always wins if available, otherwise fall back to local
+  if(cloudState){
+    state=cloudState;
+    // Update localStorage with cloud data so next load is fast
+    try{localStorage.setItem("sogelink_fpa_live",JSON.stringify(cloudState));}catch(e){}
+  } else if(localState){
+    state=localState;
+  } else {
+    state=JSON.parse(JSON.stringify(DEF));
   }
   if(!state)state=JSON.parse(JSON.stringify(DEF));
   // Defaults
@@ -514,7 +525,7 @@ function renderAdmin(){
     </div>
     <div class="topbar-spacer"></div>
     <div class="topbar-actions">
-      ${isAdmin()?`<button class="btn-top" onclick="currentUser={name:currentUser.name,role:'member'};render()">My tasks</button><button class="btn-top" onclick="openUserMgmt()">👥 Team</button><button class="btn-top" onclick="exportDataBackup()">💾</button>`:`<button class="btn-top" onclick="currentUser={name:currentUser.name,role:'admin'};render()">Project view</button>`}
+      ${isAdmin()?`<button class="btn-top" onclick="currentUser={name:currentUser.name,role:'member'};render()">My tasks</button><button class="btn-top" onclick="openUserMgmt()">👥 Team</button><button class="btn-top" onclick="forceRefresh()" title="Pull latest data from cloud">🔄</button><button class="btn-top" onclick="exportDataBackup()">💾</button>`:`<button class="btn-top" onclick="currentUser={name:currentUser.name,role:'admin'};render()">Project view</button>`}
       <div class="topbar-user">${av(currentUser.name,26)}<span>${currentUser.name}</span>${adminBadge}</div>
       <button class="btn-top" onclick="logout()">Sign out</button>
       ${topbarSyncHTML()}
@@ -1498,6 +1509,14 @@ function downloadWfTemplate(){
     const a=document.createElement("a");a.href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,"+o;
     a.download="fpa_workflow_template.xlsx";document.body.appendChild(a);a.click();document.body.removeChild(a);
   }
+}
+
+function forceRefresh(){
+  try{localStorage.removeItem("sogelink_fpa_live");}catch(e){}
+  showToast("Refreshing from cloud...");
+  setTimeout(()=>{
+    loadState().then(()=>render()).catch(e=>{render();});
+  },300);
 }
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
